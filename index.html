@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f5f0">
-  <meta name="description" content="Наши маленькие и большие мечты — вишлист Жигачевых.">
+  <meta name="description" content="Вишлист Жигачевых — наши маленькие и большие мечты.">
   <title>вишлист Жигачевых</title>
 
   <style>
@@ -20,9 +20,12 @@
     }
 
     * { box-sizing: border-box; }
+
     [hidden] { display: none !important; }
 
     body {
+      position: relative;
+      isolation: isolate;
       margin: 0;
       min-height: 100vh;
       color: var(--ink);
@@ -46,7 +49,21 @@
       outline-offset: 3px;
     }
 
+    /* Единственный декоративный элемент — гирлянда */
+    .dreamy-garland {
+      position: absolute;
+      z-index: 2;
+      top: 5px;
+      right: 4%;
+      width: 240px;
+      height: 115px;
+      overflow: visible;
+      pointer-events: none;
+      opacity: .82;
+    }
+
     .shell {
+      position: relative;
       max-width: 1440px;
       margin: auto;
       padding: 25px clamp(18px, 4vw, 56px);
@@ -128,36 +145,10 @@
       font-size: 13px;
     }
 
-    .progress {
-      max-width: 430px;
-      margin: 30px 0 40px;
-    }
-
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .track {
-      height: 3px;
-      overflow: hidden;
-      border-radius: 9px;
-      background: #e5ddd6;
-    }
-
-    .fill {
-      width: 0;
-      height: 100%;
-      background: var(--rose);
-      transition: width .25s;
-    }
-
     .masonry {
       columns: 4 210px;
       column-gap: 22px;
+      margin-top: 40px;
     }
 
     .folder {
@@ -514,6 +505,14 @@
       .new-folder { min-height: 135px; }
       .folder-name { font-size: 12px; }
       .modal { padding: 24px 20px; }
+
+      .dreamy-garland {
+        top: 2px;
+        right: 1%;
+        width: 140px;
+        height: 70px;
+        opacity: .72;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -523,6 +522,79 @@
 </head>
 
 <body>
+
+  <!-- Единственный декоративный элемент: гирлянда с тёплыми лампочками -->
+  <svg class="dreamy-garland"
+       viewBox="0 0 240 115"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg"
+       aria-hidden="true">
+
+    <defs>
+      <radialGradient id="bulbGlow">
+        <stop offset="0%" stop-color="#FFE8AC" stop-opacity=".8"/>
+        <stop offset="45%" stop-color="#F8D99A" stop-opacity=".28"/>
+        <stop offset="100%" stop-color="#F8D99A" stop-opacity="0"/>
+      </radialGradient>
+
+      <radialGradient id="bulbGlass" cx="35%" cy="25%" r="80%">
+        <stop offset="0%" stop-color="#FFFBE8"/>
+        <stop offset="35%" stop-color="#FFE9B1"/>
+        <stop offset="75%" stop-color="#EBC982"/>
+        <stop offset="100%" stop-color="#CBA96C"/>
+      </radialGradient>
+
+      <filter id="softGlow" x="-200%" y="-200%"
+              width="500%" height="500%">
+        <feGaussianBlur stdDeviation="5"/>
+      </filter>
+    </defs>
+
+    <path d="M3 15 C50 20 60 48 115 35 S190 9 237 17"
+          stroke="#88796B"
+          stroke-width="1.15"
+          stroke-linecap="round"/>
+
+    <g fill="url(#bulbGlow)" filter="url(#softGlow)">
+      <circle cx="35" cy="30" r="13"/>
+      <circle cx="76" cy="43" r="13"/>
+      <circle cx="119" cy="35" r="13"/>
+      <circle cx="163" cy="24" r="13"/>
+      <circle cx="207" cy="14" r="13"/>
+    </g>
+
+    <g stroke="#88796B" stroke-width="1.2">
+      <path d="M35 30 L35 34 M76 43 L76 47
+               M119 35 L119 39 M163 24 L163 28
+               M207 14 L207 18"/>
+    </g>
+
+    <g fill="#A99A84">
+      <rect x="32.5" y="32" width="5" height="4" rx="1"/>
+      <rect x="73.5" y="45" width="5" height="4" rx="1"/>
+      <rect x="116.5" y="37" width="5" height="4" rx="1"/>
+      <rect x="160.5" y="26" width="5" height="4" rx="1"/>
+      <rect x="204.5" y="16" width="5" height="4" rx="1"/>
+    </g>
+
+    <g fill="url(#bulbGlass)">
+      <ellipse cx="35" cy="40" rx="4.1" ry="5.4"/>
+      <ellipse cx="76" cy="53" rx="4.1" ry="5.4"/>
+      <ellipse cx="119" cy="45" rx="4.1" ry="5.4"/>
+      <ellipse cx="163" cy="34" rx="4.1" ry="5.4"/>
+      <ellipse cx="207" cy="24" rx="4.1" ry="5.4"/>
+    </g>
+
+    <g stroke="#FFFDF4" stroke-width="1.2"
+       stroke-linecap="round" opacity=".9">
+      <path d="M33.5 37.5 L34.5 36.5"/>
+      <path d="M74.5 50.5 L75.5 49.5"/>
+      <path d="M117.5 42.5 L118.5 41.5"/>
+      <path d="M161.5 31.5 L162.5 30.5"/>
+      <path d="M205.5 21.5 L206.5 20.5"/>
+    </g>
+  </svg>
+
   <main class="shell">
     <header>
       <button class="brand" id="home" aria-label="На главную">
@@ -531,8 +603,11 @@
 
       <label class="search">
         <span aria-hidden="true">⌕</span>
-        <input id="search" type="search" placeholder="найти желание..." aria-label="Поиск желаний">
-        <button class="icon-button" id="clearSearch" type="button" aria-label="Очистить поиск" hidden>×</button>
+        <input id="search" type="search"
+               placeholder="найти желание..."
+               aria-label="Поиск желаний">
+        <button class="icon-button" id="clearSearch"
+                type="button" aria-label="Очистить поиск" hidden>×</button>
       </label>
     </header>
 
@@ -551,12 +626,14 @@
 
   <div class="modal-backdrop" id="modalBackdrop" hidden>
     <form class="modal" id="folderForm">
-      <button class="close" id="closeModal" type="button" aria-label="Закрыть">×</button>
+      <button class="close" id="closeModal" type="button"
+              aria-label="Закрыть">×</button>
       <p class="eyebrow">A NEW LITTLE SPACE</p>
       <h2>новая <i>папка</i></h2>
 
       <label class="field-label" for="folderTitle">название</label>
-      <input class="field" id="folderTitle" maxlength="100" required placeholder="например, наши путешествия">
+      <input class="field" id="folderTitle" maxlength="100"
+             required placeholder="например, наши путешествия">
 
       <label class="field-label" for="coverInput">обложка из галереи</label>
       <label class="upload" id="uploadPreview">
@@ -565,19 +642,22 @@
         <input id="coverInput" type="file" accept="image/*" hidden>
       </label>
 
-      <button class="small-button" id="removeCover" type="button" hidden>убрать обложку</button>
+      <button class="small-button" id="removeCover"
+              type="button" hidden>убрать обложку</button>
       <button class="primary" type="submit">создать папку</button>
     </form>
   </div>
 
   <div class="modal-backdrop" id="wishBackdrop" hidden>
     <form class="modal" id="wishForm">
-      <button class="close" id="closeWish" type="button" aria-label="Закрыть">×</button>
+      <button class="close" id="closeWish" type="button"
+              aria-label="Закрыть">×</button>
       <p class="eyebrow">A LITTLE WISH</p>
       <h2 id="wishModalTitle">новое <i>желание</i></h2>
 
       <label class="field-label" for="wishInput">что хочется?</label>
-      <textarea class="field" id="wishInput" maxlength="3000" required placeholder="запиши свою мечту..."></textarea>
+      <textarea class="field" id="wishInput" maxlength="3000"
+                required placeholder="запиши свою мечту..."></textarea>
       <button class="primary" type="submit">сохранить желание</button>
     </form>
   </div>
@@ -617,12 +697,16 @@
       }
 
       function safeImage(value) {
-        return typeof value === "string" && value.startsWith("data:image/") ? value : "";
+        return typeof value === "string" &&
+          value.startsWith("data:image/") ? value : "";
       }
 
       function load() {
         try {
-          const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+          const data = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "[]"
+          );
+
           if (!Array.isArray(data)) return [];
 
           return data.filter(f =>
@@ -661,19 +745,13 @@
         $("toast").textContent = message;
         $("toast").hidden = false;
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => $("toast").hidden = true, 4500);
+        toastTimer = setTimeout(() => {
+          $("toast").hidden = true;
+        }, 4500);
       }
 
       function escapeText(text) {
         return escapeHTML(text).replace(/\n/g, "<br>");
-      }
-
-      function totals() {
-        const wishes = folders.flatMap(f => f.wishes);
-        return {
-          all: wishes.length,
-          done: wishes.filter(w => w.done).length
-        };
       }
 
       function render() {
@@ -693,7 +771,8 @@
           $("subtitle").textContent = "";
           renderDetail(active);
         } else {
-          $("heading").innerHTML = "<i>наши</i> маленькие и большие <i>мечты</i>";
+          $("heading").innerHTML =
+            "<i>наши</i> маленькие и большие <i>мечты</i>";
           $("subtitle").textContent = "";
           renderGrid();
         }
@@ -709,14 +788,17 @@
           return `
             <article class="folder">
               <button class="cover ${heights[i % heights.length]} ${f.tone}"
-                data-open="${escapeHTML(f.id)}" aria-label="Открыть ${escapeHTML(f.title)}">
+                data-open="${escapeHTML(f.id)}"
+                aria-label="Открыть ${escapeHTML(f.title)}">
                 ${cover}
                 <span class="cover-count">${f.wishes.length}</span>
               </button>
-              <button class="folder-name" data-open="${escapeHTML(f.id)}">${escapeHTML(f.title)}</button>
+              <button class="folder-name"
+                data-open="${escapeHTML(f.id)}">${escapeHTML(f.title)}</button>
               <div class="folder-meta">
                 <span>${done} / ${f.wishes.length} исполнено</span>
-                <span>${f.wishes.length ? Math.round(done / f.wishes.length * 100) : 0}%</span>
+                <span>${f.wishes.length
+                  ? Math.round(done / f.wishes.length * 100) : 0}%</span>
               </div>
             </article>`;
         }).join("") + `
@@ -739,7 +821,9 @@
 
         $("detail").innerHTML = `
           <button class="back" id="back">← все папки</button>
-          ${folder.cover ? `<img class="folder-banner" src="${folder.cover}" alt="Обложка папки">` : ""}
+          ${folder.cover
+            ? `<img class="folder-banner" src="${folder.cover}" alt="Обложка папки">`
+            : ""}
           <div class="folder-toolbar">
             <p class="subtitle">${done} из ${folder.wishes.length} исполнено</p>
             <div>
@@ -751,19 +835,27 @@
           <div id="wishList">
             ${folder.wishes.map(w => `
               <article class="wish">
-                <button class="check ${w.done ? "on" : ""}" data-toggle="${escapeHTML(w.id)}"
-                  aria-label="${w.done ? "Снять отметку" : "Отметить выполненным"}">${w.done ? "✓" : ""}</button>
+                <button class="check ${w.done ? "on" : ""}"
+                  data-toggle="${escapeHTML(w.id)}"
+                  aria-label="${w.done ? "Снять отметку" : "Отметить выполненным"}">
+                  ${w.done ? "✓" : ""}
+                </button>
                 <div class="wish-text ${w.done ? "done" : ""}">${escapeText(w.text)}</div>
                 <div class="wish-actions">
-                  <button data-edit="${escapeHTML(w.id)}" aria-label="Редактировать желание">✎</button>
-                  <button data-delete="${escapeHTML(w.id)}" aria-label="Удалить желание">×</button>
+                  <button data-edit="${escapeHTML(w.id)}"
+                    aria-label="Редактировать желание">✎</button>
+                  <button data-delete="${escapeHTML(w.id)}"
+                    aria-label="Удалить желание">×</button>
                 </div>
               </article>`).join("")}
-            ${folder.wishes.length ? "" : '<div class="empty">здесь пока живут только мечты…</div>'}
+            ${folder.wishes.length
+              ? "" : '<div class="empty">здесь пока живут только мечты…</div>'}
           </div>
           <form class="add-wish" id="addWish">
             <span>＋</span>
-            <input id="newWishText" maxlength="3000" placeholder="записать новое желание..." aria-label="Новое желание" required>
+            <input id="newWishText" maxlength="3000"
+              placeholder="записать новое желание..."
+              aria-label="Новое желание" required>
             <button type="submit">добавить</button>
           </form>`;
 
@@ -784,7 +876,9 @@
         $("detail").querySelectorAll("[data-delete]").forEach(btn =>
           btn.addEventListener("click", () => {
             if (!confirm("Удалить это желание?")) return;
-            folder.wishes = folder.wishes.filter(w => w.id !== btn.dataset.delete);
+            folder.wishes = folder.wishes.filter(
+              w => w.id !== btn.dataset.delete
+            );
             save();
             render();
           })
@@ -798,14 +892,15 @@
           e.preventDefault();
           const text = $("newWishText").value.trim();
           if (!text) return;
+
           folder.wishes.push({ id: makeId(), text, done: false });
-          save();
-          render();
+          if (save()) render();
         });
 
         $("renameFolder").addEventListener("click", () => {
           const title = prompt("Новое название папки:", folder.title);
           if (title === null || !title.trim()) return;
+
           folder.title = title.trim().slice(0, 100);
           save();
           render();
@@ -815,25 +910,36 @@
           const input = document.createElement("input");
           input.type = "file";
           input.accept = "image/*";
+
           input.onchange = () => readCover(input.files[0], data => {
+            const previous = folder.cover;
             folder.cover = data;
-            save();
+            if (!save()) folder.cover = previous;
             render();
           });
+
           input.click();
         });
 
         $("deleteFolder").addEventListener("click", () => {
           if (!confirm("Удалить папку и все желания внутри?")) return;
+
+          const previous = folders;
           folders = folders.filter(f => f.id !== folder.id);
+
+          if (!save()) {
+            folders = previous;
+            return;
+          }
+
           activeId = null;
-          save();
           render();
         });
       }
 
       function renderResults() {
         const needle = query.trim().toLocaleLowerCase("ru");
+
         const results = folders.flatMap(f => f.wishes
           .filter(w => w.text.toLocaleLowerCase("ru").includes(needle))
           .map(w => ({
@@ -863,6 +969,7 @@
             const [fid, wid] = btn.dataset.resultToggle.split("|");
             const folder = folders.find(f => f.id === fid);
             const wish = folder?.wishes.find(w => w.id === wid);
+
             if (wish) wish.done = !wish.done;
             save();
             render();
@@ -887,6 +994,7 @@
           <span>＋</span>
           <span>выбрать изображение</span>
           <input id="coverInput" type="file" accept="image/*" hidden>`;
+
         $("removeCover").hidden = true;
         $("modalBackdrop").hidden = false;
         $("folderTitle").focus();
@@ -900,8 +1008,8 @@
           return;
         }
 
-        if (file.size > 1.5 * 1024 * 1024) {
-          notify("Для этой версии выбери изображение до 1,5 МБ.");
+        if (file.size > 8 * 1024 * 1024) {
+          notify("Выбери изображение размером до 8 МБ.");
           return;
         }
 
@@ -912,13 +1020,22 @@
 
           img.onload = () => {
             const max = 1000;
-            const scale = Math.min(1, max / Math.max(img.width, img.height));
+            const scale = Math.min(
+              1, max / Math.max(img.width, img.height)
+            );
             const canvas = document.createElement("canvas");
 
             canvas.width = Math.max(1, Math.round(img.width * scale));
             canvas.height = Math.max(1, Math.round(img.height * scale));
 
-            canvas.getContext("2d").drawImage(
+            const context = canvas.getContext("2d");
+
+            if (!context) {
+              notify("Не удалось обработать изображение.");
+              return;
+            }
+
+            context.drawImage(
               img, 0, 0, canvas.width, canvas.height
             );
 
@@ -953,15 +1070,21 @@
         const title = $("folderTitle").value.trim();
         if (!title) return;
 
-        folders.push({
+        const folder = {
           id: makeId(),
           title: title.slice(0, 100),
           cover: draftCover,
           tone: tones[folders.length % tones.length],
           wishes: []
-        });
+        };
 
-        save();
+        folders.push(folder);
+
+        if (!save()) {
+          folders.pop();
+          return;
+        }
+
         $("modalBackdrop").hidden = true;
         render();
       });
@@ -1011,11 +1134,18 @@
         if (!folder || !text) return;
 
         const wish = folder.wishes.find(w => w.id === editingWishId);
-        if (wish) wish.text = text;
+        if (!wish) return;
+
+        const previous = wish.text;
+        wish.text = text;
+
+        if (!save()) {
+          wish.text = previous;
+          return;
+        }
 
         $("wishBackdrop").hidden = true;
         editingWishId = null;
-        save();
         render();
       });
 
