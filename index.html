@@ -1,0 +1,947 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5f0">
+  <title>вишлист Жигачевых ♡</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+    :root {
+      --paper: #f7f5f0;
+      --ink: #39363a;
+      --muted: #918984;
+      --rose: #b88f99;
+      --line: #e7dfd7;
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.11'/%3E%3C/svg%3E");
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, textarea { font: inherit; }
+    button { color: inherit; cursor: pointer; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--rose);
+      outline-offset: 3px;
+    }
+
+    .shell {
+      max-width: 1440px;
+      margin: auto;
+      padding: 25px clamp(18px, 4vw, 56px);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 66px;
+    }
+
+    .brand {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      font-size: 23px;
+      font-weight: 600;
+      letter-spacing: -1px;
+      text-align: left;
+    }
+
+    .brand i, h1 i, h2 i, .serif {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+    }
+
+    .brand i { color: var(--rose); }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: min(290px, 48%);
+      border-bottom: 1px solid #d9d0c9;
+      padding: 8px 0;
+    }
+
+    .search input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 12px;
+    }
+
+    .icon-button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #a0878b;
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 53px);
+      font-weight: 500;
+      letter-spacing: -2px;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .progress {
+      max-width: 430px;
+      margin: 30px 0 40px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .track {
+      height: 3px;
+      overflow: hidden;
+      border-radius: 9px;
+      background: #e5ddd6;
+    }
+
+    .fill {
+      width: 0;
+      height: 100%;
+      background: var(--rose);
+      transition: width .25s;
+    }
+
+    .masonry {
+      columns: 4 210px;
+      column-gap: 22px;
+    }
+
+    .folder {
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 27px;
+      break-inside: avoid;
+    }
+
+    .cover {
+      position: relative;
+      display: grid;
+      width: 100%;
+      padding: 0;
+      place-items: center;
+      overflow: hidden;
+      border: 0;
+      border-radius: 16px;
+      background: #e8d8d5;
+      transition: transform .2s;
+    }
+
+    .cover:hover { transform: translateY(-3px); }
+    .cover.tall { height: 290px; }
+    .cover.medium { height: 220px; }
+    .cover.short { height: 165px; }
+    .cover.rose { background: #e8d8d5; }
+    .cover.blue { background: #d6e0e4; }
+    .cover.sand { background: #e6dcd0; }
+    .cover.lilac { background: #ded9e4; }
+
+    .cover img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cover-symbol {
+      color: #917d83;
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+    }
+
+    .cover-count {
+      position: absolute;
+      right: 11px;
+      bottom: 11px;
+      min-width: 28px;
+      border: 1px solid #ffffff90;
+      border-radius: 30px;
+      padding: 6px 9px;
+      background: #ffffffc7;
+      font-size: 10px;
+      backdrop-filter: blur(8px);
+    }
+
+    .folder-name {
+      display: block;
+      max-width: 100%;
+      margin: 11px 0 6px;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .folder-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .new-folder {
+      display: flex;
+      width: 100%;
+      min-height: 165px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      break-inside: avoid;
+      border: 1px dashed #d2c4be;
+      border-radius: 16px;
+      background: #ffffff35;
+      color: #927b80;
+      font-size: 12px;
+    }
+
+    .new-folder b { font-size: 30px; font-weight: 400; }
+
+    .back {
+      margin: 0 0 25px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .folder-banner {
+      width: 100%;
+      max-height: 300px;
+      margin: 18px 0;
+      border-radius: 16px;
+      object-fit: cover;
+    }
+
+    .folder-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .small-button {
+      border: 0;
+      padding: 7px 0;
+      background: transparent;
+      color: #a16f79;
+      font-size: 11px;
+    }
+
+    .wish {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding: 16px 2px;
+    }
+
+    .check {
+      display: grid;
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      place-items: center;
+      border: 1px solid #c8b7b7;
+      border-radius: 50%;
+      background: transparent;
+      font-size: 12px;
+    }
+
+    .check.on {
+      border-color: var(--rose);
+      background: var(--rose);
+      color: white;
+    }
+
+    .wish-text {
+      flex: 1;
+      min-width: 0;
+      padding-top: 1px;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .wish-text.done {
+      color: #aaa29d;
+      text-decoration: line-through;
+    }
+
+    .wish-actions { display: flex; gap: 5px; }
+    .wish-actions button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .add-wish {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      border-bottom: 1px solid #d9d0c9;
+      padding-bottom: 10px;
+    }
+
+    .add-wish input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 13px;
+    }
+
+    .add-wish button {
+      border: 0;
+      background: transparent;
+      color: #9b737d;
+      font-size: 12px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      z-index: 5;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow-y: auto;
+      padding: 18px;
+      background: #29242b65;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal {
+      position: relative;
+      width: min(100%, 430px);
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid white;
+      border-radius: 22px;
+      padding: 29px;
+      background: var(--paper);
+      box-shadow: 0 20px 80px #29242b20;
+    }
+
+    .modal h2 {
+      margin: 0 0 25px;
+      font-size: 32px;
+      font-weight: 400;
+    }
+
+    .close {
+      position: absolute;
+      top: 14px;
+      right: 17px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 24px;
+    }
+
+    .field-label {
+      display: block;
+      margin: 17px 0 8px;
+      color: #817773;
+      font-size: 11px;
+    }
+
+    .field {
+      width: 100%;
+      border: 1px solid #e0d7d0;
+      border-radius: 10px;
+      padding: 12px;
+      background: #fffdf9;
+      font-size: 13px;
+    }
+
+    textarea.field { min-height: 100px; resize: vertical; }
+
+    .upload {
+      display: flex;
+      min-height: 115px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      overflow: hidden;
+      border: 1px dashed #d2c3bd;
+      border-radius: 12px;
+      background: #eee8e2;
+      color: #8e7b7d;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .upload img { width: 100%; max-height: 200px; object-fit: cover; }
+    .primary {
+      width: 100%;
+      margin-top: 23px;
+      border: 0;
+      border-radius: 10px;
+      padding: 14px;
+      background: #b88f99;
+      color: white;
+      font-size: 13px;
+    }
+
+    .empty {
+      padding: 35px 10px;
+      color: var(--muted);
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-style: italic;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 65px;
+      padding: 20px 0;
+      color: #a29a94;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    footer span { color: var(--rose); }
+    .toast {
+      position: fixed;
+      z-index: 10;
+      right: 18px;
+      bottom: 18px;
+      max-width: calc(100% - 36px);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 13px 16px;
+      background: white;
+      box-shadow: 0 5px 25px #00000010;
+      font-size: 12px;
+    }
+
+    @media (max-width: 700px) {
+      .shell { padding: 20px 17px; }
+      header { margin-bottom: 43px; }
+      .brand { font-size: 19px; }
+      .masonry { columns: 2; column-gap: 13px; }
+      .folder { margin-bottom: 21px; }
+      .cover { border-radius: 13px; }
+      .cover.tall { height: 235px; }
+      .cover.medium { height: 185px; }
+      .cover.short { height: 135px; }
+      .new-folder { min-height: 135px; }
+      .folder-name { font-size: 12px; }
+      .modal { padding: 24px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <button class="brand" id="home" aria-label="На главную">
+        вишлист <i>Жигачевых</i> ♡
+      </button>
+      <label class="search">
+        <span aria-hidden="true">⌕</span>
+        <input id="search" type="search" placeholder="найти желание..." aria-label="Поиск желаний">
+        <button class="icon-button" id="clearSearch" type="button" aria-label="Очистить поиск" hidden>×</button>
+      </label>
+    </header>
+
+    <section class="intro">
+      <p class="eyebrow">OUR LITTLE WORLD</p>
+      <h1 id="heading">наши <i>желания</i></h1>
+      <p class="subtitle" id="subtitle">наши маленькие и большие мечты</p>
+    </section>
+
+    <section class="progress" id="overallProgress">
+      <div class="progress-info">
+        <span>наш маленький прогресс</span>
+        <span id="progressText">0 из 0 · 0%</span>
+      </div>
+      <div class="track"><div class="fill" id="progressFill"></div></div>
+    </section>
+
+    <section class="masonry" id="grid"></section>
+    <section id="detail" hidden></section>
+    <section id="results" hidden></section>
+
+    <footer>made with <span>♡</span> for our little dreams</footer>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <form class="modal" id="folderForm">
+      <button class="close" id="closeModal" type="button" aria-label="Закрыть">×</button>
+      <p class="eyebrow">A NEW LITTLE SPACE</p>
+      <h2>новая <i>папка</i></h2>
+      <label class="field-label" for="folderTitle">название</label>
+      <input class="field" id="folderTitle" maxlength="100" required placeholder="например, наши путешествия">
+
+      <label class="field-label" for="coverInput">обложка из галереи</label>
+      <label class="upload" id="uploadPreview">
+        <span>＋</span>
+        <span>выбрать изображение</span>
+        <input id="coverInput" type="file" accept="image/*" hidden>
+      </label>
+      <button class="small-button" id="removeCover" type="button" hidden>убрать обложку</button>
+      <button class="primary" type="submit">создать папку</button>
+    </form>
+  </div>
+
+  <div class="modal-backdrop" id="wishBackdrop" hidden>
+    <form class="modal" id="wishForm">
+      <button class="close" id="closeWish" type="button" aria-label="Закрыть">×</button>
+      <p class="eyebrow">A LITTLE WISH</p>
+      <h2 id="wishModalTitle">новое <i>желание</i></h2>
+      <label class="field-label" for="wishInput">что хочется?</label>
+      <textarea class="field" id="wishInput" maxlength="3000" required placeholder="запиши свою мечту..."></textarea>
+      <button class="primary" type="submit">сохранить желание</button>
+    </form>
+  </div>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const STORAGE_KEY = "zhigachevs-wishlist-v1";
+      const $ = id => document.getElementById(id);
+      const symbols = ["✳", "♡", "☾", "✿"];
+      const tones = ["rose", "blue", "sand", "lilac"];
+      const heights = ["tall", "short", "medium", "short"];
+
+      let folders = [];
+      let activeId = null;
+      let query = "";
+      let draftCover = "";
+      let editingWishId = null;
+      let toastTimer;
+
+      function makeId() {
+        return window.crypto?.randomUUID?.() ||
+          Date.now().toString(36) + Math.random().toString(36).slice(2);
+      }
+
+      function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, char => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;",
+          '"': "&quot;", "'": "&#39;"
+        })[char]);
+      }
+
+      function safeImage(value) {
+        return typeof value === "string" && value.startsWith("data:image/") ? value : "";
+      }
+
+      function load() {
+        try {
+          const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+          if (!Array.isArray(data)) return [];
+          return data.filter(f => f && typeof f.id === "string" &&
+            typeof f.title === "string" && Array.isArray(f.wishes))
+            .map(f => ({
+              id: f.id,
+              title: f.title.slice(0, 100),
+              cover: safeImage(f.cover),
+              tone: tones.includes(f.tone) ? f.tone : "rose",
+              wishes: f.wishes.filter(w => w && typeof w.text === "string")
+                .map(w => ({
+                  id: String(w.id || makeId()),
+                  text: w.text.slice(0, 3000),
+                  done: Boolean(w.done)
+                }))
+            }));
+        } catch {
+          return [];
+        }
+      }
+
+      function save() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(folders));
+          return true;
+        } catch {
+          notify("Не удалось сохранить данные. Возможно, обложки занимают слишком много места.");
+          return false;
+        }
+      }
+
+      function notify(message) {
+        $("toast").textContent = message;
+        $("toast").hidden = false;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => $("toast").hidden = true, 4500);
+      }
+
+      function escapeText(text) {
+        return escapeHTML(text).replace(/\n/g, "<br>");
+      }
+
+      function totals() {
+        const wishes = folders.flatMap(f => f.wishes);
+        const done = wishes.filter(w => w.done).length;
+        return { all: wishes.length, done };
+      }
+
+      function render() {
+        const total = totals();
+        const percent = total.all ? Math.round(total.done / total.all * 100) : 0;
+        $("progressText").textContent = `${total.done} из ${total.all} · ${percent}%`;
+        $("progressFill").style.width = percent + "%";
+
+        const searching = Boolean(query.trim());
+        const active = folders.find(f => f.id === activeId) || null;
+        $("overallProgress").hidden = searching || Boolean(active);
+        $("grid").hidden = searching || Boolean(active);
+        $("detail").hidden = searching || !active;
+        $("results").hidden = !searching;
+
+        if (searching) {
+          $("heading").innerHTML = "найденные <i>желания</i>";
+          $("subtitle").textContent = "поиск по всем нашим папкам";
+          renderResults();
+        } else if (active) {
+          $("heading").textContent = active.title;
+          $("subtitle").textContent = "маленькие шаги к тому, что хочется";
+          renderDetail(active);
+        } else {
+          $("heading").innerHTML = "наши <i>желания</i>";
+          $("subtitle").textContent = "наши маленькие и большие мечты";
+          renderGrid();
+        }
+      }
+
+      function renderGrid() {
+        $("grid").innerHTML = folders.map((f, i) => {
+          const done = f.wishes.filter(w => w.done).length;
+          const cover = f.cover
+            ? `<img src="${f.cover}" alt="" loading="lazy">`
+            : `<span class="cover-symbol">${symbols[i % symbols.length]}</span>`;
+          return `
+            <article class="folder">
+              <button class="cover ${heights[i % heights.length]} ${f.tone}"
+                data-open="${escapeHTML(f.id)}" aria-label="Открыть ${escapeHTML(f.title)}">
+                ${cover}
+                <span class="cover-count">${f.wishes.length}</span>
+              </button>
+              <button class="folder-name" data-open="${escapeHTML(f.id)}">${escapeHTML(f.title)}</button>
+              <div class="folder-meta">
+                <span>${done} / ${f.wishes.length} исполнено</span>
+                <span>${f.wishes.length ? Math.round(done / f.wishes.length * 100) : 0}%</span>
+              </div>
+            </article>`;
+        }).join("") + `
+          <button class="new-folder" id="newFolder">
+            <b>＋</b><i class="serif">новая папка</i>
+          </button>`;
+
+        $("newFolder").addEventListener("click", openFolderModal);
+        $("grid").querySelectorAll("[data-open]").forEach(button => {
+          button.addEventListener("click", () => {
+            activeId = button.dataset.open;
+            render();
+          });
+        });
+      }
+
+      function renderDetail(folder) {
+        const done = folder.wishes.filter(w => w.done).length;
+        $("detail").innerHTML = `
+          <button class="back" id="back">← все папки</button>
+          ${folder.cover ? `<img class="folder-banner" src="${folder.cover}" alt="Обложка папки">` : ""}
+          <div class="folder-toolbar">
+            <p class="subtitle">${done} из ${folder.wishes.length} исполнено</p>
+            <div>
+              <button class="small-button" id="renameFolder">переименовать</button>
+              <button class="small-button" id="changeCover">обложка</button>
+              <button class="small-button" id="deleteFolder">удалить</button>
+            </div>
+          </div>
+          <div id="wishList">
+            ${folder.wishes.map(w => `
+              <article class="wish">
+                <button class="check ${w.done ? "on" : ""}" data-toggle="${escapeHTML(w.id)}"
+                  aria-label="${w.done ? "Снять отметку" : "Отметить выполненным"}">${w.done ? "✓" : ""}</button>
+                <div class="wish-text ${w.done ? "done" : ""}">${escapeText(w.text)}</div>
+                <div class="wish-actions">
+                  <button data-edit="${escapeHTML(w.id)}" aria-label="Редактировать желание">✎</button>
+                  <button data-delete="${escapeHTML(w.id)}" aria-label="Удалить желание">×</button>
+                </div>
+              </article>`).join("")}
+            ${folder.wishes.length ? "" : '<div class="empty">здесь пока живут только мечты…</div>'}
+          </div>
+          <form class="add-wish" id="addWish">
+            <span>＋</span>
+            <input id="newWishText" maxlength="3000" placeholder="записать новое желание..." aria-label="Новое желание" required>
+            <button type="submit">добавить</button>
+          </form>`;
+
+        $("back").addEventListener("click", () => { activeId = null; render(); });
+
+        $("detail").querySelectorAll("[data-toggle]").forEach(btn =>
+          btn.addEventListener("click", () => {
+            const wish = folder.wishes.find(w => w.id === btn.dataset.toggle);
+            if (wish) wish.done = !wish.done;
+            save(); render();
+          })
+        );
+
+        $("detail").querySelectorAll("[data-delete]").forEach(btn =>
+          btn.addEventListener("click", () => {
+            if (!confirm("Удалить это желание?")) return;
+            folder.wishes = folder.wishes.filter(w => w.id !== btn.dataset.delete);
+            save(); render();
+          })
+        );
+
+        $("detail").querySelectorAll("[data-edit]").forEach(btn =>
+          btn.addEventListener("click", () => openWishModal(btn.dataset.edit))
+        );
+
+        $("addWish").addEventListener("submit", e => {
+          e.preventDefault();
+          const text = $("newWishText").value.trim();
+          if (!text) return;
+          folder.wishes.push({ id: makeId(), text, done: false });
+          save(); render();
+        });
+
+        $("renameFolder").addEventListener("click", () => {
+          const title = prompt("Новое название папки:", folder.title);
+          if (title === null || !title.trim()) return;
+          folder.title = title.trim().slice(0, 100);
+          save(); render();
+        });
+
+        $("changeCover").addEventListener("click", () => {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.accept = "image/*";
+          input.onchange = () => readCover(input.files[0], data => {
+            folder.cover = data; save(); render();
+          });
+          input.click();
+        });
+
+        $("deleteFolder").addEventListener("click", () => {
+          if (!confirm("Удалить папку и все желания внутри?")) return;
+          folders = folders.filter(f => f.id !== folder.id);
+          activeId = null; save(); render();
+        });
+      }
+
+      function renderResults() {
+        const needle = query.trim().toLocaleLowerCase("ru");
+        const results = folders.flatMap(f => f.wishes
+          .filter(w => w.text.toLocaleLowerCase("ru").includes(needle))
+          .map(w => ({ ...w, folderId: f.id, folderTitle: f.title })));
+
+        $("results").innerHTML = results.length ? results.map(w => `
+          <article class="wish">
+            <button class="check ${w.done ? "on" : ""}" data-result-toggle="${escapeHTML(w.folderId)}|${escapeHTML(w.id)}">${w.done ? "✓" : ""}</button>
+            <button class="wish-text ${w.done ? "done" : ""}" data-result-open="${escapeHTML(w.folderId)}">${escapeText(w.text)}<br><small style="color:#918984">${escapeHTML(w.folderTitle)}</small></button>
+          </article>`).join("") : '<div class="empty">ничего не найдено…</div>';
+
+        $("results").querySelectorAll("[data-result-toggle]").forEach(btn =>
+          btn.addEventListener("click", () => {
+            const [fid, wid] = btn.dataset.resultToggle.split("|");
+            const folder = folders.find(f => f.id === fid);
+            const wish = folder?.wishes.find(w => w.id === wid);
+            if (wish) wish.done = !wish.done;
+            save(); render();
+          })
+        );
+
+        $("results").querySelectorAll("[data-result-open]").forEach(btn =>
+          btn.addEventListener("click", () => {
+            activeId = btn.dataset.resultOpen;
+            query = "";
+            $("search").value = "";
+            $("clearSearch").hidden = true;
+            render();
+          })
+        );
+      }
+
+      function openFolderModal() {
+        $("folderForm").reset();
+        draftCover = "";
+        $("uploadPreview").innerHTML = '<span>＋</span><span>выбрать изображение</span><input id="coverInput" type="file" accept="image/*" hidden>';
+        $("removeCover").hidden = true;
+        $("modalBackdrop").hidden = false;
+        $("folderTitle").focus();
+      }
+
+      function readCover(file, callback) {
+        if (!file) return;
+        if (!file.type.startsWith("image/")) {
+          notify("Выбери файл изображения.");
+          return;
+        }
+        if (file.size > 1.5 * 1024 * 1024) {
+          notify("Для этой версии выбери изображение до 1,5 МБ.");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            const max = 1000;
+            const scale = Math.min(1, max / Math.max(img.width, img.height));
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.max(1, Math.round(img.width * scale));
+            canvas.height = Math.max(1, Math.round(img.height * scale));
+            canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+            callback(canvas.toDataURL("image/jpeg", 0.78));
+          };
+          img.onerror = () => notify("Не удалось открыть изображение.");
+          img.src = reader.result;
+        };
+        reader.onerror = () => notify("Не удалось прочитать файл.");
+        reader.readAsDataURL(file);
+      }
+
+      function openWishModal(id) {
+        editingWishId = id;
+        const folder = folders.find(f => f.id === activeId);
+        const wish = folder?.wishes.find(w => w.id === id);
+        if (!wish) return;
+        $("wishModalTitle").innerHTML = "изменить <i>желание</i>";
+        $("wishInput").value = wish.text;
+        $("wishBackdrop").hidden = false;
+        $("wishInput").focus();
+      }
+
+      $("folderForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const title = $("folderTitle").value.trim();
+        if (!title) return;
+        folders.push({
+          id: makeId(), title: title.slice(0, 100),
+          cover: draftCover, tone: tones[folders.length % tones.length], wishes: []
+        });
+        save();
+        $("modalBackdrop").hidden = true;
+        render();
+      });
+
+      $("coverInput").addEventListener("change", e => {
+        readCover(e.target.files[0], data => {
+          draftCover = data;
+          $("uploadPreview").innerHTML = `<img src="${data}" alt="Предпросмотр обложки"><span>нажми, чтобы заменить</span><input id="coverInput" type="file" accept="image/*" hidden>`;
+          $("removeCover").hidden = false;
+        });
+      });
+
+      $("uploadPreview").addEventListener("click", e => {
+        if (e.target.id === "coverInput") return;
+        const input = $("coverInput");
+        if (input) input.click();
+      });
+
+      $("removeCover").addEventListener("click", () => {
+        draftCover = "";
+        $("uploadPreview").innerHTML = '<span>＋</span><span>выбрать изображение</span><input id="coverInput" type="file" accept="image/*" hidden>';
+        $("removeCover").hidden = true;
+      });
+
+      $("closeModal").addEventListener("click", () => $("modalBackdrop").hidden = true);
+      $("modalBackdrop").addEventListener("click", e => {
+        if (e.target === $("modalBackdrop")) $("modalBackdrop").hidden = true;
+      });
+
+      $("wishForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const folder = folders.find(f => f.id === activeId);
+        const text = $("wishInput").value.trim();
+        if (!folder || !text) return;
+        const wish = folder.wishes.find(w => w.id === editingWishId);
+        if (wish) wish.text = text;
+        $("wishBackdrop").hidden = true;
+        editingWishId = null;
+        save(); render();
+      });
+
+      $("closeWish").addEventListener("click", () => $("wishBackdrop").hidden = true);
+      $("wishBackdrop").addEventListener("click", e => {
+        if (e.target === $("wishBackdrop")) $("wishBackdrop").hidden = true;
+      });
+
+      $("search").addEventListener("input", e => {
+        query = e.target.value;
+        activeId = null;
+        $("clearSearch").hidden = !query;
+        render();
+      });
+
+      $("clearSearch").addEventListener("click", () => {
+        query = "";
+        $("search").value = "";
+        $("clearSearch").hidden = true;
+        render();
+      });
+
+      $("home").addEventListener("click", () => {
+        activeId = null;
+        query = "";
+        $("search").value = "";
+        $("clearSearch").hidden = true;
+        render();
+      });
+
+      folders = load();
+      render();
+    })();
+  </script>
+</body>
+</html>
