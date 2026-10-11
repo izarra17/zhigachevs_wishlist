@@ -20,12 +20,9 @@
     }
 
     * { box-sizing: border-box; }
-
     [hidden] { display: none !important; }
 
     body {
-      position: relative;
-      isolation: isolate;
       margin: 0;
       min-height: 100vh;
       color: var(--ink);
@@ -36,11 +33,7 @@
     }
 
     button, input, textarea { font: inherit; }
-
-    button {
-      color: inherit;
-      cursor: pointer;
-    }
+    button { color: inherit; cursor: pointer; }
 
     button:focus-visible,
     input:focus-visible,
@@ -49,21 +42,7 @@
       outline-offset: 3px;
     }
 
-    /* Единственный декоративный элемент — гирлянда */
-    .dreamy-garland {
-      position: absolute;
-      z-index: 2;
-      top: 5px;
-      right: 4%;
-      width: 240px;
-      height: 115px;
-      overflow: visible;
-      pointer-events: none;
-      opacity: .82;
-    }
-
     .shell {
-      position: relative;
       max-width: 1440px;
       margin: auto;
       padding: 25px clamp(18px, 4vw, 56px);
@@ -74,23 +53,20 @@
       justify-content: space-between;
       align-items: center;
       gap: 20px;
-      margin-bottom: 66px;
+      margin-bottom: 55px;
     }
 
     .brand {
       border: 0;
-      background: transparent;
       padding: 0;
+      background: transparent;
       font-size: 23px;
       font-weight: 600;
       letter-spacing: -1px;
       text-align: left;
     }
 
-    .brand i,
-    h1 i,
-    h2 i,
-    .serif {
+    .brand i, h1 i, h2 i, .serif {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
     }
@@ -124,7 +100,7 @@
 
     .eyebrow {
       max-width: 580px;
-      margin: 0 0 18px;
+      margin: 0;
       color: #a0878b;
       font-size: 11px;
       line-height: 1.8;
@@ -143,6 +119,21 @@
       margin: 10px 0 0;
       color: var(--muted);
       font-size: 13px;
+    }
+
+    /* Гирлянда занимает всю ширину, но сохраняет круглые лампочки */
+    .garland-wrap {
+      width: 100%;
+      height: clamp(58px, 8vw, 100px);
+      margin: 7px 0 5px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .dreamy-garland {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
 
     .masonry {
@@ -245,10 +236,7 @@
       font-size: 12px;
     }
 
-    .new-folder b {
-      font-size: 30px;
-      font-weight: 400;
-    }
+    .new-folder b { font-size: 30px; font-weight: 400; }
 
     .back {
       margin: 0 0 25px;
@@ -327,10 +315,7 @@
       text-decoration: line-through;
     }
 
-    .wish-actions {
-      display: flex;
-      gap: 5px;
-    }
+    .wish-actions { display: flex; gap: 5px; }
 
     .wish-actions button {
       border: 0;
@@ -420,10 +405,7 @@
       font-size: 13px;
     }
 
-    textarea.field {
-      min-height: 100px;
-      resize: vertical;
-    }
+    textarea.field { min-height: 100px; resize: vertical; }
 
     .upload {
       display: flex;
@@ -505,14 +487,6 @@
       .new-folder { min-height: 135px; }
       .folder-name { font-size: 12px; }
       .modal { padding: 24px 20px; }
-
-      .dreamy-garland {
-        top: 2px;
-        right: 1%;
-        width: 140px;
-        height: 70px;
-        opacity: .72;
-      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -522,79 +496,6 @@
 </head>
 
 <body>
-
-  <!-- Единственный декоративный элемент: гирлянда с тёплыми лампочками -->
-  <svg class="dreamy-garland"
-       viewBox="0 0 240 115"
-       fill="none"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-
-    <defs>
-      <radialGradient id="bulbGlow">
-        <stop offset="0%" stop-color="#FFE8AC" stop-opacity=".8"/>
-        <stop offset="45%" stop-color="#F8D99A" stop-opacity=".28"/>
-        <stop offset="100%" stop-color="#F8D99A" stop-opacity="0"/>
-      </radialGradient>
-
-      <radialGradient id="bulbGlass" cx="35%" cy="25%" r="80%">
-        <stop offset="0%" stop-color="#FFFBE8"/>
-        <stop offset="35%" stop-color="#FFE9B1"/>
-        <stop offset="75%" stop-color="#EBC982"/>
-        <stop offset="100%" stop-color="#CBA96C"/>
-      </radialGradient>
-
-      <filter id="softGlow" x="-200%" y="-200%"
-              width="500%" height="500%">
-        <feGaussianBlur stdDeviation="5"/>
-      </filter>
-    </defs>
-
-    <path d="M3 15 C50 20 60 48 115 35 S190 9 237 17"
-          stroke="#88796B"
-          stroke-width="1.15"
-          stroke-linecap="round"/>
-
-    <g fill="url(#bulbGlow)" filter="url(#softGlow)">
-      <circle cx="35" cy="30" r="13"/>
-      <circle cx="76" cy="43" r="13"/>
-      <circle cx="119" cy="35" r="13"/>
-      <circle cx="163" cy="24" r="13"/>
-      <circle cx="207" cy="14" r="13"/>
-    </g>
-
-    <g stroke="#88796B" stroke-width="1.2">
-      <path d="M35 30 L35 34 M76 43 L76 47
-               M119 35 L119 39 M163 24 L163 28
-               M207 14 L207 18"/>
-    </g>
-
-    <g fill="#A99A84">
-      <rect x="32.5" y="32" width="5" height="4" rx="1"/>
-      <rect x="73.5" y="45" width="5" height="4" rx="1"/>
-      <rect x="116.5" y="37" width="5" height="4" rx="1"/>
-      <rect x="160.5" y="26" width="5" height="4" rx="1"/>
-      <rect x="204.5" y="16" width="5" height="4" rx="1"/>
-    </g>
-
-    <g fill="url(#bulbGlass)">
-      <ellipse cx="35" cy="40" rx="4.1" ry="5.4"/>
-      <ellipse cx="76" cy="53" rx="4.1" ry="5.4"/>
-      <ellipse cx="119" cy="45" rx="4.1" ry="5.4"/>
-      <ellipse cx="163" cy="34" rx="4.1" ry="5.4"/>
-      <ellipse cx="207" cy="24" rx="4.1" ry="5.4"/>
-    </g>
-
-    <g stroke="#FFFDF4" stroke-width="1.2"
-       stroke-linecap="round" opacity=".9">
-      <path d="M33.5 37.5 L34.5 36.5"/>
-      <path d="M74.5 50.5 L75.5 49.5"/>
-      <path d="M117.5 42.5 L118.5 41.5"/>
-      <path d="M161.5 31.5 L162.5 30.5"/>
-      <path d="M205.5 21.5 L206.5 20.5"/>
-    </g>
-  </svg>
-
   <main class="shell">
     <header>
       <button class="brand" id="home" aria-label="На главную">
@@ -613,6 +514,87 @@
 
     <section class="intro">
       <p class="eyebrow">на старой кухне строим планы, учимся мечтать..</p>
+
+      <!-- Гирлянда с круглыми лампочками -->
+      <div class="garland-wrap" aria-hidden="true">
+        <svg class="dreamy-garland"
+             viewBox="0 0 1200 100"
+             preserveAspectRatio="xMidYMid meet"
+             xmlns="http://www.w3.org/2000/svg">
+
+          <defs>
+            <radialGradient id="warmGlow">
+              <stop offset="0%" stop-color="#FFF17A" stop-opacity="1"/>
+              <stop offset="35%" stop-color="#FFD52F" stop-opacity=".65"/>
+              <stop offset="100%" stop-color="#FFC928" stop-opacity="0"/>
+            </radialGradient>
+
+            <radialGradient id="roundGlass" cx="30%" cy="25%" r="75%">
+              <stop offset="0%" stop-color="#FFFDE7"/>
+              <stop offset="35%" stop-color="#FFF18A"/>
+              <stop offset="75%" stop-color="#FFD43B"/>
+              <stop offset="100%" stop-color="#EAA817"/>
+            </radialGradient>
+
+            <filter id="roundBlur" x="-200%" y="-200%"
+                    width="400%" height="400%">
+              <feGaussianBlur stdDeviation="9"/>
+            </filter>
+          </defs>
+
+          <!-- Провод -->
+          <path d="M0 12 Q150 12 150 35
+                   T300 45 T450 28 T600 35
+                   T750 48 T900 30 T1050 15 T1200 18"
+                fill="none" stroke="#817365"
+                stroke-width="1.5"/>
+
+          <!-- Золотистое свечение -->
+          <g fill="url(#warmGlow)" filter="url(#roundBlur)">
+            <circle cx="150" cy="35" r="24"/>
+            <circle cx="300" cy="45" r="24"/>
+            <circle cx="450" cy="28" r="24"/>
+            <circle cx="600" cy="35" r="24"/>
+            <circle cx="750" cy="48" r="24"/>
+            <circle cx="900" cy="30" r="24"/>
+            <circle cx="1050" cy="15" r="24"/>
+          </g>
+
+          <!-- Патроны -->
+          <g fill="#88765C">
+            <rect x="145" y="30" width="10" height="7" rx="2"/>
+            <rect x="295" y="40" width="10" height="7" rx="2"/>
+            <rect x="445" y="23" width="10" height="7" rx="2"/>
+            <rect x="595" y="30" width="10" height="7" rx="2"/>
+            <rect x="745" y="43" width="10" height="7" rx="2"/>
+            <rect x="895" y="25" width="10" height="7" rx="2"/>
+            <rect x="1045" y="10" width="10" height="7" rx="2"/>
+          </g>
+
+          <!-- Круглые лампочки -->
+          <g fill="url(#roundGlass)">
+            <circle cx="150" cy="44" r="9"/>
+            <circle cx="300" cy="54" r="9"/>
+            <circle cx="450" cy="37" r="9"/>
+            <circle cx="600" cy="44" r="9"/>
+            <circle cx="750" cy="57" r="9"/>
+            <circle cx="900" cy="39" r="9"/>
+            <circle cx="1050" cy="24" r="9"/>
+          </g>
+
+          <!-- Блики -->
+          <g fill="#FFFFFF" opacity=".95">
+            <circle cx="147" cy="41" r="2"/>
+            <circle cx="297" cy="51" r="2"/>
+            <circle cx="447" cy="34" r="2"/>
+            <circle cx="597" cy="41" r="2"/>
+            <circle cx="747" cy="54" r="2"/>
+            <circle cx="897" cy="36" r="2"/>
+            <circle cx="1047" cy="21" r="2"/>
+          </g>
+        </svg>
+      </div>
+
       <h1 id="heading"><i>наши</i> маленькие и большие <i>мечты</i></h1>
       <p class="subtitle" id="subtitle"></p>
     </section>
@@ -628,7 +610,7 @@
     <form class="modal" id="folderForm">
       <button class="close" id="closeModal" type="button"
               aria-label="Закрыть">×</button>
-      <p class="eyebrow">A NEW LITTLE SPACE</p>
+      <p class="eyebrow">много хочешь - много будет!!</p>
       <h2>новая <i>папка</i></h2>
 
       <label class="field-label" for="folderTitle">название</label>
@@ -653,7 +635,7 @@
       <button class="close" id="closeWish" type="button"
               aria-label="Закрыть">×</button>
       <p class="eyebrow">A LITTLE WISH</p>
-      <h2 id="wishModalTitle">новое <i>желание</i></h2>
+      <h2 id="wishModalTitle">изменить <i>желание</i></h2>
 
       <label class="field-label" for="wishInput">что хочется?</label>
       <textarea class="field" id="wishInput" maxlength="3000"
@@ -688,11 +670,8 @@
 
       function escapeHTML(value) {
         return String(value).replace(/[&<>"']/g, char => ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#39;"
+          "&": "&amp;", "<": "&lt;", ">": "&gt;",
+          '"': "&quot;", "'": "&#39;"
         })[char]);
       }
 
@@ -849,7 +828,7 @@
                 </div>
               </article>`).join("")}
             ${folder.wishes.length
-              ? "" : '<div class="empty">здесь пока живут только мечты…</div>'}
+              ? "" : '<div class="empty">хочется все и сразу...</div>'}
           </div>
           <form class="add-wish" id="addWish">
             <span>＋</span>
@@ -867,19 +846,23 @@
         $("detail").querySelectorAll("[data-toggle]").forEach(btn =>
           btn.addEventListener("click", () => {
             const wish = folder.wishes.find(w => w.id === btn.dataset.toggle);
-            if (wish) wish.done = !wish.done;
-            save();
-            render();
+            if (!wish) return;
+
+            wish.done = !wish.done;
+            if (save()) render();
           })
         );
 
         $("detail").querySelectorAll("[data-delete]").forEach(btn =>
           btn.addEventListener("click", () => {
             if (!confirm("Удалить это желание?")) return;
+
+            const previous = folder.wishes;
             folder.wishes = folder.wishes.filter(
               w => w.id !== btn.dataset.delete
             );
-            save();
+
+            if (!save()) folder.wishes = previous;
             render();
           })
         );
@@ -895,14 +878,17 @@
 
           folder.wishes.push({ id: makeId(), text, done: false });
           if (save()) render();
+          else folder.wishes.pop();
         });
 
         $("renameFolder").addEventListener("click", () => {
           const title = prompt("Новое название папки:", folder.title);
           if (title === null || !title.trim()) return;
 
+          const previous = folder.title;
           folder.title = title.trim().slice(0, 100);
-          save();
+
+          if (!save()) folder.title = previous;
           render();
         });
 
@@ -969,10 +955,10 @@
             const [fid, wid] = btn.dataset.resultToggle.split("|");
             const folder = folders.find(f => f.id === fid);
             const wish = folder?.wishes.find(w => w.id === wid);
+            if (!wish) return;
 
-            if (wish) wish.done = !wish.done;
-            save();
-            render();
+            wish.done = !wish.done;
+            if (save()) render();
           })
         );
 
@@ -1023,8 +1009,8 @@
             const scale = Math.min(
               1, max / Math.max(img.width, img.height)
             );
-            const canvas = document.createElement("canvas");
 
+            const canvas = document.createElement("canvas");
             canvas.width = Math.max(1, Math.round(img.width * scale));
             canvas.height = Math.max(1, Math.round(img.height * scale));
 
@@ -1035,10 +1021,7 @@
               return;
             }
 
-            context.drawImage(
-              img, 0, 0, canvas.width, canvas.height
-            );
-
+            context.drawImage(img, 0, 0, canvas.width, canvas.height);
             callback(canvas.toDataURL("image/jpeg", 0.78));
           };
 
@@ -1052,10 +1035,8 @@
 
       function openWishModal(id) {
         editingWishId = id;
-
         const folder = folders.find(f => f.id === activeId);
         const wish = folder?.wishes.find(w => w.id === id);
-
         if (!wish) return;
 
         $("wishModalTitle").innerHTML = "изменить <i>желание</i>";
@@ -1092,7 +1073,6 @@
       $("coverInput").addEventListener("change", e => {
         readCover(e.target.files[0], data => {
           draftCover = data;
-
           $("uploadPreview").innerHTML = `
             <img src="${data}" alt="Предпросмотр обложки">
             <span>нажми, чтобы заменить</span>
@@ -1130,7 +1110,6 @@
 
         const folder = folders.find(f => f.id === activeId);
         const text = $("wishInput").value.trim();
-
         if (!folder || !text) return;
 
         const wish = folder.wishes.find(w => w.id === editingWishId);
