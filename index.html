@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f5f0">
-  <title>вишлист Жигачевых ♡</title>
+  <meta name="description" content="Наши маленькие и большие мечты — вишлист Жигачевых.">
+  <title>вишлист Жигачевых</title>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
@@ -31,8 +33,15 @@
     }
 
     button, input, textarea { font: inherit; }
-    button { color: inherit; cursor: pointer; }
-    button:focus-visible, input:focus-visible, textarea:focus-visible {
+
+    button {
+      color: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
       outline: 2px solid var(--rose);
       outline-offset: 3px;
     }
@@ -61,12 +70,16 @@
       text-align: left;
     }
 
-    .brand i, h1 i, h2 i, .serif {
+    .brand i,
+    h1 i,
+    h2 i,
+    .serif {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
     }
 
     .brand i { color: var(--rose); }
+
     .search {
       display: flex;
       align-items: center;
@@ -93,17 +106,20 @@
     }
 
     .eyebrow {
-      margin: 0 0 12px;
+      max-width: 580px;
+      margin: 0 0 18px;
       color: #a0878b;
-      font-size: 10px;
-      letter-spacing: 2px;
+      font-size: 11px;
+      line-height: 1.8;
+      letter-spacing: .7px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(34px, 5vw, 53px);
+      font-size: clamp(32px, 5vw, 53px);
       font-weight: 500;
       letter-spacing: -2px;
+      line-height: 1.2;
     }
 
     .subtitle {
@@ -238,7 +254,10 @@
       font-size: 12px;
     }
 
-    .new-folder b { font-size: 30px; font-weight: 400; }
+    .new-folder b {
+      font-size: 30px;
+      font-weight: 400;
+    }
 
     .back {
       margin: 0 0 25px;
@@ -261,12 +280,14 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      flex-wrap: wrap;
       margin: 12px 0;
     }
 
     .small-button {
       border: 0;
       padding: 7px 0;
+      margin-right: 12px;
       background: transparent;
       color: #a16f79;
       font-size: 11px;
@@ -302,9 +323,12 @@
       flex: 1;
       min-width: 0;
       padding-top: 1px;
+      border: 0;
+      background: transparent;
       font-size: 13px;
       line-height: 1.6;
       overflow-wrap: anywhere;
+      text-align: left;
     }
 
     .wish-text.done {
@@ -312,7 +336,11 @@
       text-decoration: line-through;
     }
 
-    .wish-actions { display: flex; gap: 5px; }
+    .wish-actions {
+      display: flex;
+      gap: 5px;
+    }
+
     .wish-actions button {
       border: 0;
       background: transparent;
@@ -401,7 +429,10 @@
       font-size: 13px;
     }
 
-    textarea.field { min-height: 100px; resize: vertical; }
+    textarea.field {
+      min-height: 100px;
+      resize: vertical;
+    }
 
     .upload {
       display: flex;
@@ -419,7 +450,12 @@
       font-size: 12px;
     }
 
-    .upload img { width: 100%; max-height: 200px; object-fit: cover; }
+    .upload img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+    }
+
     .primary {
       width: 100%;
       margin-top: 23px;
@@ -444,11 +480,12 @@
       margin-top: 65px;
       padding: 20px 0;
       color: #a29a94;
-      font-size: 10px;
+      font-size: 11px;
       text-align: center;
     }
 
     footer span { color: var(--rose); }
+
     .toast {
       position: fixed;
       z-index: 10;
@@ -467,6 +504,7 @@
       .shell { padding: 20px 17px; }
       header { margin-bottom: 43px; }
       .brand { font-size: 19px; }
+      .eyebrow { font-size: 10px; }
       .masonry { columns: 2; column-gap: 13px; }
       .folder { margin-bottom: 21px; }
       .cover { border-radius: 13px; }
@@ -483,12 +521,14 @@
     }
   </style>
 </head>
+
 <body>
   <main class="shell">
     <header>
       <button class="brand" id="home" aria-label="На главную">
-        вишлист <i>Жигачевых</i> ♡
+        вишлист <i>Жигачевых</i>
       </button>
+
       <label class="search">
         <span aria-hidden="true">⌕</span>
         <input id="search" type="search" placeholder="найти желание..." aria-label="Поиск желаний">
@@ -497,24 +537,16 @@
     </header>
 
     <section class="intro">
-      <p class="eyebrow">OUR LITTLE WORLD</p>
-      <h1 id="heading">наши <i>желания</i></h1>
-      <p class="subtitle" id="subtitle">наши маленькие и большие мечты</p>
-    </section>
-
-    <section class="progress" id="overallProgress">
-      <div class="progress-info">
-        <span>наш маленький прогресс</span>
-        <span id="progressText">0 из 0 · 0%</span>
-      </div>
-      <div class="track"><div class="fill" id="progressFill"></div></div>
+      <p class="eyebrow">на старой кухне строим планы, учимся мечтать..</p>
+      <h1 id="heading">наши маленькие <i>и большие мечты</i></h1>
+      <p class="subtitle" id="subtitle"></p>
     </section>
 
     <section class="masonry" id="grid"></section>
     <section id="detail" hidden></section>
     <section id="results" hidden></section>
 
-    <footer>made with <span>♡</span> for our little dreams</footer>
+    <footer>сделано с <span>❤️</span> для мужа</footer>
   </main>
 
   <div class="modal-backdrop" id="modalBackdrop" hidden>
@@ -522,6 +554,7 @@
       <button class="close" id="closeModal" type="button" aria-label="Закрыть">×</button>
       <p class="eyebrow">A NEW LITTLE SPACE</p>
       <h2>новая <i>папка</i></h2>
+
       <label class="field-label" for="folderTitle">название</label>
       <input class="field" id="folderTitle" maxlength="100" required placeholder="например, наши путешествия">
 
@@ -531,6 +564,7 @@
         <span>выбрать изображение</span>
         <input id="coverInput" type="file" accept="image/*" hidden>
       </label>
+
       <button class="small-button" id="removeCover" type="button" hidden>убрать обложку</button>
       <button class="primary" type="submit">создать папку</button>
     </form>
@@ -541,6 +575,7 @@
       <button class="close" id="closeWish" type="button" aria-label="Закрыть">×</button>
       <p class="eyebrow">A LITTLE WISH</p>
       <h2 id="wishModalTitle">новое <i>желание</i></h2>
+
       <label class="field-label" for="wishInput">что хочется?</label>
       <textarea class="field" id="wishInput" maxlength="3000" required placeholder="запиши свою мечту..."></textarea>
       <button class="primary" type="submit">сохранить желание</button>
@@ -573,8 +608,11 @@
 
       function escapeHTML(value) {
         return String(value).replace(/[&<>"']/g, char => ({
-          "&": "&amp;", "<": "&lt;", ">": "&gt;",
-          '"': "&quot;", "'": "&#39;"
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
         })[char]);
       }
 
@@ -586,20 +624,24 @@
         try {
           const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
           if (!Array.isArray(data)) return [];
-          return data.filter(f => f && typeof f.id === "string" &&
-            typeof f.title === "string" && Array.isArray(f.wishes))
-            .map(f => ({
-              id: f.id,
-              title: f.title.slice(0, 100),
-              cover: safeImage(f.cover),
-              tone: tones.includes(f.tone) ? f.tone : "rose",
-              wishes: f.wishes.filter(w => w && typeof w.text === "string")
-                .map(w => ({
-                  id: String(w.id || makeId()),
-                  text: w.text.slice(0, 3000),
-                  done: Boolean(w.done)
-                }))
-            }));
+
+          return data.filter(f =>
+            f && typeof f.id === "string" &&
+            typeof f.title === "string" &&
+            Array.isArray(f.wishes)
+          ).map(f => ({
+            id: f.id,
+            title: f.title.slice(0, 100),
+            cover: safeImage(f.cover),
+            tone: tones.includes(f.tone) ? f.tone : "rose",
+            wishes: f.wishes
+              .filter(w => w && typeof w.text === "string")
+              .map(w => ({
+                id: String(w.id || makeId()),
+                text: w.text.slice(0, 3000),
+                done: Boolean(w.done)
+              }))
+          }));
         } catch {
           return [];
         }
@@ -628,34 +670,31 @@
 
       function totals() {
         const wishes = folders.flatMap(f => f.wishes);
-        const done = wishes.filter(w => w.done).length;
-        return { all: wishes.length, done };
+        return {
+          all: wishes.length,
+          done: wishes.filter(w => w.done).length
+        };
       }
 
       function render() {
-        const total = totals();
-        const percent = total.all ? Math.round(total.done / total.all * 100) : 0;
-        $("progressText").textContent = `${total.done} из ${total.all} · ${percent}%`;
-        $("progressFill").style.width = percent + "%";
-
-        const searching = Boolean(query.trim());
         const active = folders.find(f => f.id === activeId) || null;
-        $("overallProgress").hidden = searching || Boolean(active);
+        const searching = Boolean(query.trim());
+
         $("grid").hidden = searching || Boolean(active);
         $("detail").hidden = searching || !active;
         $("results").hidden = !searching;
 
         if (searching) {
-          $("heading").innerHTML = "найденные <i>желания</i>";
+          $("heading").innerHTML = "найденные <i>мечты</i>";
           $("subtitle").textContent = "поиск по всем нашим папкам";
           renderResults();
         } else if (active) {
           $("heading").textContent = active.title;
-          $("subtitle").textContent = "маленькие шаги к тому, что хочется";
+          $("subtitle").textContent = "";
           renderDetail(active);
         } else {
-          $("heading").innerHTML = "наши <i>желания</i>";
-          $("subtitle").textContent = "наши маленькие и большие мечты";
+          $("heading").innerHTML = "наши маленькие <i>и большие мечты</i>";
+          $("subtitle").textContent = "";
           renderGrid();
         }
       }
@@ -666,6 +705,7 @@
           const cover = f.cover
             ? `<img src="${f.cover}" alt="" loading="lazy">`
             : `<span class="cover-symbol">${symbols[i % symbols.length]}</span>`;
+
           return `
             <article class="folder">
               <button class="cover ${heights[i % heights.length]} ${f.tone}"
@@ -685,6 +725,7 @@
           </button>`;
 
         $("newFolder").addEventListener("click", openFolderModal);
+
         $("grid").querySelectorAll("[data-open]").forEach(button => {
           button.addEventListener("click", () => {
             activeId = button.dataset.open;
@@ -695,6 +736,7 @@
 
       function renderDetail(folder) {
         const done = folder.wishes.filter(w => w.done).length;
+
         $("detail").innerHTML = `
           <button class="back" id="back">← все папки</button>
           ${folder.cover ? `<img class="folder-banner" src="${folder.cover}" alt="Обложка папки">` : ""}
@@ -725,13 +767,17 @@
             <button type="submit">добавить</button>
           </form>`;
 
-        $("back").addEventListener("click", () => { activeId = null; render(); });
+        $("back").addEventListener("click", () => {
+          activeId = null;
+          render();
+        });
 
         $("detail").querySelectorAll("[data-toggle]").forEach(btn =>
           btn.addEventListener("click", () => {
             const wish = folder.wishes.find(w => w.id === btn.dataset.toggle);
             if (wish) wish.done = !wish.done;
-            save(); render();
+            save();
+            render();
           })
         );
 
@@ -739,7 +785,8 @@
           btn.addEventListener("click", () => {
             if (!confirm("Удалить это желание?")) return;
             folder.wishes = folder.wishes.filter(w => w.id !== btn.dataset.delete);
-            save(); render();
+            save();
+            render();
           })
         );
 
@@ -752,14 +799,16 @@
           const text = $("newWishText").value.trim();
           if (!text) return;
           folder.wishes.push({ id: makeId(), text, done: false });
-          save(); render();
+          save();
+          render();
         });
 
         $("renameFolder").addEventListener("click", () => {
           const title = prompt("Новое название папки:", folder.title);
           if (title === null || !title.trim()) return;
           folder.title = title.trim().slice(0, 100);
-          save(); render();
+          save();
+          render();
         });
 
         $("changeCover").addEventListener("click", () => {
@@ -767,7 +816,9 @@
           input.type = "file";
           input.accept = "image/*";
           input.onchange = () => readCover(input.files[0], data => {
-            folder.cover = data; save(); render();
+            folder.cover = data;
+            save();
+            render();
           });
           input.click();
         });
@@ -775,7 +826,9 @@
         $("deleteFolder").addEventListener("click", () => {
           if (!confirm("Удалить папку и все желания внутри?")) return;
           folders = folders.filter(f => f.id !== folder.id);
-          activeId = null; save(); render();
+          activeId = null;
+          save();
+          render();
         });
       }
 
@@ -783,13 +836,27 @@
         const needle = query.trim().toLocaleLowerCase("ru");
         const results = folders.flatMap(f => f.wishes
           .filter(w => w.text.toLocaleLowerCase("ru").includes(needle))
-          .map(w => ({ ...w, folderId: f.id, folderTitle: f.title })));
+          .map(w => ({
+            ...w,
+            folderId: f.id,
+            folderTitle: f.title
+          }))
+        );
 
-        $("results").innerHTML = results.length ? results.map(w => `
-          <article class="wish">
-            <button class="check ${w.done ? "on" : ""}" data-result-toggle="${escapeHTML(w.folderId)}|${escapeHTML(w.id)}">${w.done ? "✓" : ""}</button>
-            <button class="wish-text ${w.done ? "done" : ""}" data-result-open="${escapeHTML(w.folderId)}">${escapeText(w.text)}<br><small style="color:#918984">${escapeHTML(w.folderTitle)}</small></button>
-          </article>`).join("") : '<div class="empty">ничего не найдено…</div>';
+        $("results").innerHTML = results.length
+          ? results.map(w => `
+            <article class="wish">
+              <button class="check ${w.done ? "on" : ""}"
+                data-result-toggle="${escapeHTML(w.folderId)}|${escapeHTML(w.id)}">
+                ${w.done ? "✓" : ""}
+              </button>
+              <button class="wish-text ${w.done ? "done" : ""}"
+                data-result-open="${escapeHTML(w.folderId)}">
+                ${escapeText(w.text)}<br>
+                <small style="color:#918984">${escapeHTML(w.folderTitle)}</small>
+              </button>
+            </article>`).join("")
+          : '<div class="empty">ничего не найдено…</div>';
 
         $("results").querySelectorAll("[data-result-toggle]").forEach(btn =>
           btn.addEventListener("click", () => {
@@ -797,7 +864,8 @@
             const folder = folders.find(f => f.id === fid);
             const wish = folder?.wishes.find(w => w.id === wid);
             if (wish) wish.done = !wish.done;
-            save(); render();
+            save();
+            render();
           })
         );
 
@@ -815,7 +883,10 @@
       function openFolderModal() {
         $("folderForm").reset();
         draftCover = "";
-        $("uploadPreview").innerHTML = '<span>＋</span><span>выбрать изображение</span><input id="coverInput" type="file" accept="image/*" hidden>';
+        $("uploadPreview").innerHTML = `
+          <span>＋</span>
+          <span>выбрать изображение</span>
+          <input id="coverInput" type="file" accept="image/*" hidden>`;
         $("removeCover").hidden = true;
         $("modalBackdrop").hidden = false;
         $("folderTitle").focus();
@@ -823,39 +894,53 @@
 
       function readCover(file, callback) {
         if (!file) return;
+
         if (!file.type.startsWith("image/")) {
           notify("Выбери файл изображения.");
           return;
         }
+
         if (file.size > 1.5 * 1024 * 1024) {
           notify("Для этой версии выбери изображение до 1,5 МБ.");
           return;
         }
 
         const reader = new FileReader();
+
         reader.onload = () => {
           const img = new Image();
+
           img.onload = () => {
             const max = 1000;
             const scale = Math.min(1, max / Math.max(img.width, img.height));
             const canvas = document.createElement("canvas");
+
             canvas.width = Math.max(1, Math.round(img.width * scale));
             canvas.height = Math.max(1, Math.round(img.height * scale));
-            canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            canvas.getContext("2d").drawImage(
+              img, 0, 0, canvas.width, canvas.height
+            );
+
             callback(canvas.toDataURL("image/jpeg", 0.78));
           };
+
           img.onerror = () => notify("Не удалось открыть изображение.");
           img.src = reader.result;
         };
+
         reader.onerror = () => notify("Не удалось прочитать файл.");
         reader.readAsDataURL(file);
       }
 
       function openWishModal(id) {
         editingWishId = id;
+
         const folder = folders.find(f => f.id === activeId);
         const wish = folder?.wishes.find(w => w.id === id);
+
         if (!wish) return;
+
         $("wishModalTitle").innerHTML = "изменить <i>желание</i>";
         $("wishInput").value = wish.text;
         $("wishBackdrop").hidden = false;
@@ -864,12 +949,18 @@
 
       $("folderForm").addEventListener("submit", e => {
         e.preventDefault();
+
         const title = $("folderTitle").value.trim();
         if (!title) return;
+
         folders.push({
-          id: makeId(), title: title.slice(0, 100),
-          cover: draftCover, tone: tones[folders.length % tones.length], wishes: []
+          id: makeId(),
+          title: title.slice(0, 100),
+          cover: draftCover,
+          tone: tones[folders.length % tones.length],
+          wishes: []
         });
+
         save();
         $("modalBackdrop").hidden = true;
         render();
@@ -878,43 +969,64 @@
       $("coverInput").addEventListener("change", e => {
         readCover(e.target.files[0], data => {
           draftCover = data;
-          $("uploadPreview").innerHTML = `<img src="${data}" alt="Предпросмотр обложки"><span>нажми, чтобы заменить</span><input id="coverInput" type="file" accept="image/*" hidden>`;
+
+          $("uploadPreview").innerHTML = `
+            <img src="${data}" alt="Предпросмотр обложки">
+            <span>нажми, чтобы заменить</span>
+            <input id="coverInput" type="file" accept="image/*" hidden>`;
           $("removeCover").hidden = false;
         });
       });
 
       $("uploadPreview").addEventListener("click", e => {
         if (e.target.id === "coverInput") return;
-        const input = $("coverInput");
-        if (input) input.click();
+        $("coverInput")?.click();
       });
 
       $("removeCover").addEventListener("click", () => {
         draftCover = "";
-        $("uploadPreview").innerHTML = '<span>＋</span><span>выбрать изображение</span><input id="coverInput" type="file" accept="image/*" hidden>';
+        $("uploadPreview").innerHTML = `
+          <span>＋</span>
+          <span>выбрать изображение</span>
+          <input id="coverInput" type="file" accept="image/*" hidden>`;
         $("removeCover").hidden = true;
       });
 
-      $("closeModal").addEventListener("click", () => $("modalBackdrop").hidden = true);
+      $("closeModal").addEventListener("click", () => {
+        $("modalBackdrop").hidden = true;
+      });
+
       $("modalBackdrop").addEventListener("click", e => {
-        if (e.target === $("modalBackdrop")) $("modalBackdrop").hidden = true;
+        if (e.target === $("modalBackdrop")) {
+          $("modalBackdrop").hidden = true;
+        }
       });
 
       $("wishForm").addEventListener("submit", e => {
         e.preventDefault();
+
         const folder = folders.find(f => f.id === activeId);
         const text = $("wishInput").value.trim();
+
         if (!folder || !text) return;
+
         const wish = folder.wishes.find(w => w.id === editingWishId);
         if (wish) wish.text = text;
+
         $("wishBackdrop").hidden = true;
         editingWishId = null;
-        save(); render();
+        save();
+        render();
       });
 
-      $("closeWish").addEventListener("click", () => $("wishBackdrop").hidden = true);
+      $("closeWish").addEventListener("click", () => {
+        $("wishBackdrop").hidden = true;
+      });
+
       $("wishBackdrop").addEventListener("click", e => {
-        if (e.target === $("wishBackdrop")) $("wishBackdrop").hidden = true;
+        if (e.target === $("wishBackdrop")) {
+          $("wishBackdrop").hidden = true;
+        }
       });
 
       $("search").addEventListener("input", e => {
