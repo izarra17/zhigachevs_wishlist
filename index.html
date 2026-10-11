@@ -60,7 +60,7 @@
       border: 0;
       padding: 0;
       background: transparent;
-      font-size: 23px;
+      font-size: 28px;
       font-weight: 600;
       letter-spacing: -1px;
       text-align: left;
@@ -121,7 +121,6 @@
       font-size: 13px;
     }
 
-    /* Гирлянда занимает всю ширину, но сохраняет круглые лампочки */
     .garland-wrap {
       width: 100%;
       height: clamp(58px, 8vw, 100px);
@@ -515,41 +514,31 @@
     <section class="intro">
       <p class="eyebrow">на старой кухне строим планы, учимся мечтать..</p>
 
-      <!-- Гирлянда с круглыми лампочками -->
       <div class="garland-wrap" aria-hidden="true">
         <svg class="dreamy-garland"
              viewBox="0 0 1200 100"
              preserveAspectRatio="xMidYMid meet"
              xmlns="http://www.w3.org/2000/svg">
-
           <defs>
             <radialGradient id="warmGlow">
               <stop offset="0%" stop-color="#FFF17A" stop-opacity="1"/>
               <stop offset="35%" stop-color="#FFD52F" stop-opacity=".65"/>
               <stop offset="100%" stop-color="#FFC928" stop-opacity="0"/>
             </radialGradient>
-
             <radialGradient id="roundGlass" cx="30%" cy="25%" r="75%">
               <stop offset="0%" stop-color="#FFFDE7"/>
               <stop offset="35%" stop-color="#FFF18A"/>
               <stop offset="75%" stop-color="#FFD43B"/>
               <stop offset="100%" stop-color="#EAA817"/>
             </radialGradient>
-
-            <filter id="roundBlur" x="-200%" y="-200%"
-                    width="400%" height="400%">
+            <filter id="roundBlur" x="-200%" y="-200%" width="400%" height="400%">
               <feGaussianBlur stdDeviation="9"/>
             </filter>
           </defs>
 
-          <!-- Провод -->
-          <path d="M0 12 Q150 12 150 35
-                   T300 45 T450 28 T600 35
-                   T750 48 T900 30 T1050 15 T1200 18"
-                fill="none" stroke="#817365"
-                stroke-width="1.5"/>
+          <path d="M0 12 Q150 12 150 35 T300 45 T450 28 T600 35 T750 48 T900 30 T1050 15 T1200 18"
+                fill="none" stroke="#817365" stroke-width="1.5"/>
 
-          <!-- Золотистое свечение -->
           <g fill="url(#warmGlow)" filter="url(#roundBlur)">
             <circle cx="150" cy="35" r="24"/>
             <circle cx="300" cy="45" r="24"/>
@@ -560,7 +549,6 @@
             <circle cx="1050" cy="15" r="24"/>
           </g>
 
-          <!-- Патроны -->
           <g fill="#88765C">
             <rect x="145" y="30" width="10" height="7" rx="2"/>
             <rect x="295" y="40" width="10" height="7" rx="2"/>
@@ -571,7 +559,6 @@
             <rect x="1045" y="10" width="10" height="7" rx="2"/>
           </g>
 
-          <!-- Круглые лампочки -->
           <g fill="url(#roundGlass)">
             <circle cx="150" cy="44" r="9"/>
             <circle cx="300" cy="54" r="9"/>
@@ -582,7 +569,6 @@
             <circle cx="1050" cy="24" r="9"/>
           </g>
 
-          <!-- Блики -->
           <g fill="#FFFFFF" opacity=".95">
             <circle cx="147" cy="41" r="2"/>
             <circle cx="297" cy="51" r="2"/>
@@ -608,39 +594,34 @@
 
   <div class="modal-backdrop" id="modalBackdrop" hidden>
     <form class="modal" id="folderForm">
-      <button class="close" id="closeModal" type="button"
-              aria-label="Закрыть">×</button>
+      <button class="close" id="closeModal" type="button" aria-label="Закрыть">×</button>
       <p class="eyebrow">много хочешь - много будет!!</p>
       <h2>новая <i>папка</i></h2>
 
       <label class="field-label" for="folderTitle">название</label>
-      <input class="field" id="folderTitle" maxlength="100"
-             required placeholder="например, наши путешествия">
+      <input class="field" id="folderTitle" maxlength="100" required placeholder="например, наши свидания">
 
       <label class="field-label" for="coverInput">обложка из галереи</label>
-      <label class="upload" id="uploadPreview">
+      <label class="upload" id="uploadPreview" for="coverInput">
         <span>＋</span>
         <span>выбрать изображение</span>
         <input id="coverInput" type="file" accept="image/*" hidden>
       </label>
 
-      <button class="small-button" id="removeCover"
-              type="button" hidden>убрать обложку</button>
-      <button class="primary" type="submit">создать папку</button>
+      <button class="small-button" id="removeCover" type="button" hidden>убрать обложку</button>
+      <button class="primary" type="submit">создать</button>
     </form>
   </div>
 
   <div class="modal-backdrop" id="wishBackdrop" hidden>
     <form class="modal" id="wishForm">
-      <button class="close" id="closeWish" type="button"
-              aria-label="Закрыть">×</button>
-      <p class="eyebrow">A LITTLE WISH</p>
+      <button class="close" id="closeWish" type="button" aria-label="Закрыть">×</button>
+      <p class="eyebrow">уверен?))</p>
       <h2 id="wishModalTitle">изменить <i>желание</i></h2>
 
       <label class="field-label" for="wishInput">что хочется?</label>
-      <textarea class="field" id="wishInput" maxlength="3000"
-                required placeholder="запиши свою мечту..."></textarea>
-      <button class="primary" type="submit">сохранить желание</button>
+      <textarea class="field" id="wishInput" maxlength="3000" required placeholder="запиши свою мечту..."></textarea>
+      <button class="primary" type="submit">сохранить</button>
     </form>
   </div>
 
@@ -676,16 +657,13 @@
       }
 
       function safeImage(value) {
-        return typeof value === "string" &&
-          value.startsWith("data:image/") ? value : "";
+        return typeof value === "string" && value.startsWith("data:image/")
+          ? value : "";
       }
 
       function load() {
         try {
-          const data = JSON.parse(
-            localStorage.getItem(STORAGE_KEY) || "[]"
-          );
-
+          const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
           if (!Array.isArray(data)) return [];
 
           return data.filter(f =>
@@ -750,8 +728,7 @@
           $("subtitle").textContent = "";
           renderDetail(active);
         } else {
-          $("heading").innerHTML =
-            "<i>наши</i> маленькие и большие <i>мечты</i>";
+          $("heading").innerHTML = "<i>наши</i> маленькие и большие <i>мечты</i>";
           $("subtitle").textContent = "";
           renderGrid();
         }
@@ -772,12 +749,10 @@
                 ${cover}
                 <span class="cover-count">${f.wishes.length}</span>
               </button>
-              <button class="folder-name"
-                data-open="${escapeHTML(f.id)}">${escapeHTML(f.title)}</button>
+              <button class="folder-name" data-open="${escapeHTML(f.id)}">${escapeHTML(f.title)}</button>
               <div class="folder-meta">
                 <span>${done} / ${f.wishes.length} исполнено</span>
-                <span>${f.wishes.length
-                  ? Math.round(done / f.wishes.length * 100) : 0}%</span>
+                <span>${f.wishes.length ? Math.round(done / f.wishes.length * 100) : 0}%</span>
               </div>
             </article>`;
         }).join("") + `
@@ -800,9 +775,7 @@
 
         $("detail").innerHTML = `
           <button class="back" id="back">← все папки</button>
-          ${folder.cover
-            ? `<img class="folder-banner" src="${folder.cover}" alt="Обложка папки">`
-            : ""}
+          ${folder.cover ? `<img class="folder-banner" src="${folder.cover}" alt="Обложка папки">` : ""}
           <div class="folder-toolbar">
             <p class="subtitle">${done} из ${folder.wishes.length} исполнено</p>
             <div>
@@ -814,27 +787,19 @@
           <div id="wishList">
             ${folder.wishes.map(w => `
               <article class="wish">
-                <button class="check ${w.done ? "on" : ""}"
-                  data-toggle="${escapeHTML(w.id)}"
-                  aria-label="${w.done ? "Снять отметку" : "Отметить выполненным"}">
-                  ${w.done ? "✓" : ""}
-                </button>
+                <button class="check ${w.done ? "on" : ""}" data-toggle="${escapeHTML(w.id)}"
+                  aria-label="${w.done ? "Снять отметку" : "Отметить выполненным"}">${w.done ? "✓" : ""}</button>
                 <div class="wish-text ${w.done ? "done" : ""}">${escapeText(w.text)}</div>
                 <div class="wish-actions">
-                  <button data-edit="${escapeHTML(w.id)}"
-                    aria-label="Редактировать желание">✎</button>
-                  <button data-delete="${escapeHTML(w.id)}"
-                    aria-label="Удалить желание">×</button>
+                  <button data-edit="${escapeHTML(w.id)}" aria-label="Редактировать желание">✎</button>
+                  <button data-delete="${escapeHTML(w.id)}" aria-label="Удалить желание">×</button>
                 </div>
               </article>`).join("")}
-            ${folder.wishes.length
-              ? "" : '<div class="empty">хочется все и сразу...</div>'}
+            ${folder.wishes.length ? "" : '<div class="empty">хочется все и сразу...</div>'}
           </div>
           <form class="add-wish" id="addWish">
             <span>＋</span>
-            <input id="newWishText" maxlength="3000"
-              placeholder="записать новое желание..."
-              aria-label="Новое желание" required>
+            <input id="newWishText" maxlength="3000" placeholder="записать новое желание..." aria-label="Новое желание" required>
             <button type="submit">добавить</button>
           </form>`;
 
@@ -847,7 +812,6 @@
           btn.addEventListener("click", () => {
             const wish = folder.wishes.find(w => w.id === btn.dataset.toggle);
             if (!wish) return;
-
             wish.done = !wish.done;
             if (save()) render();
           })
@@ -856,12 +820,8 @@
         $("detail").querySelectorAll("[data-delete]").forEach(btn =>
           btn.addEventListener("click", () => {
             if (!confirm("Удалить это желание?")) return;
-
             const previous = folder.wishes;
-            folder.wishes = folder.wishes.filter(
-              w => w.id !== btn.dataset.delete
-            );
-
+            folder.wishes = folder.wishes.filter(w => w.id !== btn.dataset.delete);
             if (!save()) folder.wishes = previous;
             render();
           })
@@ -875,7 +835,6 @@
           e.preventDefault();
           const text = $("newWishText").value.trim();
           if (!text) return;
-
           folder.wishes.push({ id: makeId(), text, done: false });
           if (save()) render();
           else folder.wishes.pop();
@@ -884,10 +843,8 @@
         $("renameFolder").addEventListener("click", () => {
           const title = prompt("Новое название папки:", folder.title);
           if (title === null || !title.trim()) return;
-
           const previous = folder.title;
           folder.title = title.trim().slice(0, 100);
-
           if (!save()) folder.title = previous;
           render();
         });
@@ -896,28 +853,23 @@
           const input = document.createElement("input");
           input.type = "file";
           input.accept = "image/*";
-
           input.onchange = () => readCover(input.files[0], data => {
             const previous = folder.cover;
             folder.cover = data;
             if (!save()) folder.cover = previous;
             render();
           });
-
           input.click();
         });
 
         $("deleteFolder").addEventListener("click", () => {
           if (!confirm("Удалить папку и все желания внутри?")) return;
-
           const previous = folders;
           folders = folders.filter(f => f.id !== folder.id);
-
           if (!save()) {
             folders = previous;
             return;
           }
-
           activeId = null;
           render();
         });
@@ -925,25 +877,17 @@
 
       function renderResults() {
         const needle = query.trim().toLocaleLowerCase("ru");
-
         const results = folders.flatMap(f => f.wishes
           .filter(w => w.text.toLocaleLowerCase("ru").includes(needle))
-          .map(w => ({
-            ...w,
-            folderId: f.id,
-            folderTitle: f.title
-          }))
+          .map(w => ({ ...w, folderId: f.id, folderTitle: f.title }))
         );
 
         $("results").innerHTML = results.length
           ? results.map(w => `
             <article class="wish">
               <button class="check ${w.done ? "on" : ""}"
-                data-result-toggle="${escapeHTML(w.folderId)}|${escapeHTML(w.id)}">
-                ${w.done ? "✓" : ""}
-              </button>
-              <button class="wish-text ${w.done ? "done" : ""}"
-                data-result-open="${escapeHTML(w.folderId)}">
+                data-result-toggle="${escapeHTML(w.folderId)}|${escapeHTML(w.id)}">${w.done ? "✓" : ""}</button>
+              <button class="wish-text ${w.done ? "done" : ""}" data-result-open="${escapeHTML(w.folderId)}">
                 ${escapeText(w.text)}<br>
                 <small style="color:#918984">${escapeHTML(w.folderTitle)}</small>
               </button>
@@ -956,7 +900,6 @@
             const folder = folders.find(f => f.id === fid);
             const wish = folder?.wishes.find(w => w.id === wid);
             if (!wish) return;
-
             wish.done = !wish.done;
             if (save()) render();
           })
@@ -976,10 +919,12 @@
       function openFolderModal() {
         $("folderForm").reset();
         draftCover = "";
+
         $("uploadPreview").innerHTML = `
           <span>＋</span>
           <span>выбрать изображение</span>
-          <input id="coverInput" type="file" accept="image/*" hidden>`;
+          <input id="coverInput" type="file" accept="image/*" hidden>
+        `;
 
         $("removeCover").hidden = true;
         $("modalBackdrop").hidden = false;
@@ -1006,16 +951,12 @@
 
           img.onload = () => {
             const max = 1000;
-            const scale = Math.min(
-              1, max / Math.max(img.width, img.height)
-            );
-
+            const scale = Math.min(1, max / Math.max(img.width, img.height));
             const canvas = document.createElement("canvas");
             canvas.width = Math.max(1, Math.round(img.width * scale));
             canvas.height = Math.max(1, Math.round(img.height * scale));
 
             const context = canvas.getContext("2d");
-
             if (!context) {
               notify("Не удалось обработать изображение.");
               return;
@@ -1060,7 +1001,6 @@
         };
 
         folders.push(folder);
-
         if (!save()) {
           folders.pop();
           return;
@@ -1070,13 +1010,26 @@
         render();
       });
 
-      $("coverInput").addEventListener("change", e => {
-        readCover(e.target.files[0], data => {
+      /*
+       * ИСПРАВЛЕНИЕ:
+       * change обрабатывается на постоянном контейнере modalBackdrop,
+       * поэтому обработчик не теряется при пересоздании coverInput.
+       */
+      $("modalBackdrop").addEventListener("change", e => {
+        if (e.target.id !== "coverInput") return;
+
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        readCover(file, data => {
           draftCover = data;
+
           $("uploadPreview").innerHTML = `
             <img src="${data}" alt="Предпросмотр обложки">
             <span>нажми, чтобы заменить</span>
-            <input id="coverInput" type="file" accept="image/*" hidden>`;
+            <input id="coverInput" type="file" accept="image/*" hidden>
+          `;
+
           $("removeCover").hidden = false;
         });
       });
@@ -1091,7 +1044,8 @@
         $("uploadPreview").innerHTML = `
           <span>＋</span>
           <span>выбрать изображение</span>
-          <input id="coverInput" type="file" accept="image/*" hidden>`;
+          <input id="coverInput" type="file" accept="image/*" hidden>
+        `;
         $("removeCover").hidden = true;
       });
 
