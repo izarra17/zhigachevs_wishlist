@@ -1207,11 +1207,6 @@
         });
       });
 
-      $("uploadPreview").addEventListener("click", e => {
-        if (e.target.id === "coverInput") return;
-        $("coverInput")?.click();
-      });
-
       $("removeCover").addEventListener("click", () => {
         draftCover = "";
         $("uploadPreview").innerHTML = `
