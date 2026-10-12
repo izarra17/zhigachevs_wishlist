@@ -1282,25 +1282,68 @@
         render();
       });
 
-      $("loginForm").addEventListener("submit", async e => {
-        e.preventDefault();
-        $("loginError").textContent = "";
-        $("loginButton").disabled = true;
-        $("loginButton").textContent = "входим…";
-        const password = $("loginPassword").value;
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: LOGIN_EMAIL,
-          password
-        });
-        $("loginButton").disabled = false;
-        $("loginButton").textContent = "войти";
-        if (error) {
-          $("loginError").textContent = "Не удалось войти. Проверь пароль и настройки аккаунта Supabase.";
-          return;
-        }
-        currentUser = data.user;
-        await showApp();
-      });
+      
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const button = $("loginButton");
+  const errorBox = $("loginError");
+  const password = $("loginPassword").value;
+
+  errorBox.textContent = "";
+  button.disabled = true;
+  button.textContent = "входим…";
+
+  let timeoutId;
+
+  try {
+    // Не позволяем окну входа бесконечно ждать ответа.
+    const authPromise = supabase.auth.signInWithPassword({
+      email: LOGIN_EMAIL,
+      password
+    });
+
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutId = setTimeout(() => {
+        reject(new Error(
+          "Сервер не ответил за 20 секунд. Проверь интернет и попробуй ещё раз."
+        ));
+      }, 20000);
+    });
+
+    const { data, error } = await Promise.race([
+      authPromise,
+      timeoutPromise
+    ]);
+
+    if (error) {
+      errorBox.textContent =
+        "Ошибка входа: " + error.message;
+      return;
+    }
+
+    if (!data?.user) {
+      errorBox.textContent =
+        "Сервер не вернул данные пользователя. Попробуй ещё раз.";
+      return;
+    }
+
+    currentUser = data.user;
+    await showApp();
+
+  } catch (error) {
+    console.error("Ошибка авторизации:", error);
+    errorBox.textContent =
+      error.message ||
+      "Не удалось связаться с сервером. Проверь интернет.";
+
+  } finally {
+    clearTimeout(timeoutId);
+    button.disabled = false;
+    button.textContent = "войти";
+  }
+});
+
 
       async function showApp() {
         $("authScreen").hidden = true;
