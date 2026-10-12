@@ -473,6 +473,30 @@
       font-size: 12px;
     }
 
+
+    .auth-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: var(--paper);
+    }
+    .auth-card {
+      width: min(100%, 390px);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 30px;
+      background: #fffdf9;
+      box-shadow: 0 15px 60px #29242b12;
+    }
+    .auth-card h1 { font-size: 34px; letter-spacing: -1px; }
+    .auth-card p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .auth-error { color: #a23e4c !important; min-height: 18px; }
+    .logout-button {
+      border: 0; background: transparent; color: var(--muted);
+      font-size: 11px; white-space: nowrap;
+    }
+
     @media (max-width: 700px) {
       .shell { padding: 20px 17px; }
       header { margin-bottom: 43px; }
@@ -496,7 +520,19 @@
 </head>
 
 <body>
-  <main class="shell">
+  <section class="auth-screen" id="authScreen">
+    <form class="auth-card" id="loginForm">
+      <p class="eyebrow">наши маленькие и большие мечты</p>
+      <h1><i>вишлист</i> Жигачевых</h1>
+      <p>Войди, чтобы открыть общий список желаний.</p>
+      <label class="field-label" for="loginPassword">Пароль</label>
+      <input class="field" id="loginPassword" type="password" autocomplete="current-password" required>
+      <button class="primary" id="loginButton" type="submit">войти</button>
+      <p class="auth-error" id="loginError" role="alert"></p>
+    </form>
+  </section>
+
+  <main class="shell" id="appShell" hidden>
     <header>
       <button class="brand" id="home" aria-label="На главную">
         вишлист <i>Жигачевых</i>
@@ -510,6 +546,7 @@
         <button class="icon-button" id="clearSearch"
                 type="button" aria-label="Очистить поиск" hidden>×</button>
       </label>
+      <button class="logout-button" id="logoutButton" type="button">выйти</button>
     </header>
 
     <section class="intro">
@@ -628,11 +665,17 @@
 
   <div class="toast" id="toast" role="status" hidden></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     (() => {
       "use strict";
 
+      const SUPABASE_URL = "https://azqusdknjilzcjdnmsio.supabase.co";
+      const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BkrLjYLpa163Kbw-StgeRQ_lEzdciXI";
+      const LOGIN_EMAIL = "vveraparikova@yandex.ru";
+      const BUCKET = "wishlist-covers";
       const STORAGE_KEY = "zhigachevs-wishlist-v1";
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
       const $ = id => document.getElementById(id);
       const symbols = ["✳", "♡", "☾", "✿"];
       const tones = ["rose", "blue", "sand", "lilac"];
@@ -644,6 +687,8 @@
       let draftCover = "";
       let editingWishId = null;
       let toastTimer;
+      let syncQueue = Promise.resolve();
+      let currentUser = null;
 
       function makeId() {
         return window.crypto?.randomUUID?.() ||
@@ -658,45 +703,9 @@
       }
 
       function safeImage(value) {
-        return typeof value === "string" && value.startsWith("data:image/")
+        return typeof value === "string" &&
+          (value.startsWith("data:image/") || value.startsWith("https://"))
           ? value : "";
-      }
-
-      function load() {
-        try {
-          const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-          if (!Array.isArray(data)) return [];
-
-          return data.filter(f =>
-            f && typeof f.id === "string" &&
-            typeof f.title === "string" &&
-            Array.isArray(f.wishes)
-          ).map(f => ({
-            id: f.id,
-            title: f.title.slice(0, 100),
-            cover: safeImage(f.cover),
-            tone: tones.includes(f.tone) ? f.tone : "rose",
-            wishes: f.wishes
-              .filter(w => w && typeof w.text === "string")
-              .map(w => ({
-                id: String(w.id || makeId()),
-                text: w.text.slice(0, 3000),
-                done: Boolean(w.done)
-              }))
-          }));
-        } catch {
-          return [];
-        }
-      }
-
-      function save() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(folders));
-          return true;
-        } catch {
-          notify("Не удалось сохранить данные. Возможно, обложки занимают слишком много места.");
-          return false;
-        }
       }
 
       function notify(message) {
@@ -706,6 +715,157 @@
         toastTimer = setTimeout(() => {
           $("toast").hidden = true;
         }, 4500);
+      }
+
+      async function loadFromSupabase() {
+        const { data: folderRows, error: folderError } = await supabase
+          .from("wishlist_folders")
+          .select("id,title,cover_path,tone,created_at")
+          .order("created_at", { ascending: true });
+        if (folderError) throw folderError;
+
+        const { data: wishRows, error: wishError } = await supabase
+          .from("wishlist_wishes")
+          .select("id,folder_id,text,done,created_at,updated_at")
+          .order("created_at", { ascending: true });
+        if (wishError) throw wishError;
+
+        // Если база пока пустая, переносим старые данные из localStorage
+        // этого браузера в Supabase, чтобы не потерять уже созданный вишлист.
+        if ((!folderRows || folderRows.length === 0) && (!wishRows || wishRows.length === 0)) {
+          try {
+            const oldData = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+            if (Array.isArray(oldData) && oldData.length) {
+              folders = oldData
+                .filter(f => f && typeof f.title === "string" && Array.isArray(f.wishes))
+                .map(f => ({
+                  id: f.id || makeId(),
+                  title: f.title.slice(0, 100),
+                  cover: safeImage(f.cover),
+                  cover_path: f.cover_path || null,
+                  tone: tones.includes(f.tone) ? f.tone : "rose",
+                  wishes: f.wishes
+                    .filter(w => w && typeof w.text === "string")
+                    .map(w => ({
+                      id: w.id || makeId(),
+                      text: w.text.slice(0, 3000),
+                      done: Boolean(w.done)
+                    }))
+                }));
+              await syncToSupabase();
+              render();
+              notify("Старый список перенесён в Supabase.");
+              return;
+            }
+          } catch (migrationError) {
+            console.warn("Не удалось перенести локальный список:", migrationError);
+          }
+        }
+
+        const loaded = await Promise.all((folderRows || []).map(async row => {
+          let cover = "";
+          if (row.cover_path) {
+            const { data: signed, error } = await supabase.storage
+              .from(BUCKET).createSignedUrl(row.cover_path, 60 * 60);
+            if (!error && signed?.signedUrl) cover = signed.signedUrl;
+          }
+          return {
+            id: row.id,
+            title: row.title,
+            cover,
+            cover_path: row.cover_path || null,
+            tone: tones.includes(row.tone) ? row.tone : "rose",
+            wishes: (wishRows || [])
+              .filter(w => w.folder_id === row.id)
+              .map(w => ({ id: w.id, text: w.text, done: Boolean(w.done) }))
+          };
+        }));
+        folders = loaded;
+        render();
+      }
+
+      async function syncToSupabase() {
+        if (!currentUser) return;
+        const folderIds = folders.map(f => f.id);
+        const { data: oldFolders, error: oldFolderError } = await supabase
+          .from("wishlist_folders").select("id,cover_path");
+        if (oldFolderError) throw oldFolderError;
+
+        for (const old of (oldFolders || [])) {
+          if (!folderIds.includes(old.id)) {
+            if (old.cover_path) {
+              const { error: storageError } = await supabase.storage.from(BUCKET).remove([old.cover_path]);
+              if (storageError) console.warn("Не удалось удалить старую обложку:", storageError.message);
+            }
+            const { error } = await supabase.from("wishlist_folders").delete().eq("id", old.id);
+            if (error) throw error;
+          }
+        }
+
+        for (const folder of folders) {
+          let coverPath = folder.cover_path || null;
+          if (folder.cover && folder.cover.startsWith("data:image/")) {
+            const response = await fetch(folder.cover);
+            const blob = await response.blob();
+            coverPath = `${currentUser.id}/${folder.id}.jpg`;
+            const { error: uploadError } = await supabase.storage
+              .from(BUCKET)
+              .upload(coverPath, blob, { contentType: "image/jpeg", upsert: true });
+            if (uploadError) throw uploadError;
+            folder.cover_path = coverPath;
+            const { data: signed } = await supabase.storage.from(BUCKET).createSignedUrl(coverPath, 60 * 60);
+            if (signed?.signedUrl) folder.cover = signed.signedUrl;
+          }
+
+          const { error: folderUpsertError } = await supabase
+            .from("wishlist_folders")
+            .upsert({
+              id: folder.id,
+              title: folder.title,
+              cover_path: coverPath,
+              tone: folder.tone
+            });
+          if (folderUpsertError) throw folderUpsertError;
+        }
+
+        const allWishes = folders.flatMap(folder => folder.wishes.map(wish => ({
+          id: wish.id,
+          folder_id: folder.id,
+          text: wish.text,
+          done: Boolean(wish.done),
+          updated_at: new Date().toISOString()
+        })));
+        const wishIds = allWishes.map(w => w.id);
+
+        const { data: oldWishes, error: oldWishesError } = await supabase
+          .from("wishlist_wishes").select("id");
+        if (oldWishesError) throw oldWishesError;
+        for (const old of (oldWishes || [])) {
+          if (!wishIds.includes(old.id)) {
+            const { error } = await supabase.from("wishlist_wishes").delete().eq("id", old.id);
+            if (error) throw error;
+          }
+        }
+        if (allWishes.length) {
+          const { error } = await supabase.from("wishlist_wishes").upsert(allWishes);
+          if (error) throw error;
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(folders));
+      }
+
+      function save() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(folders));
+        } catch {
+          notify("Не удалось сохранить локальную копию данных.");
+        }
+        syncQueue = syncQueue
+          .then(() => syncToSupabase())
+          .catch(error => {
+            console.error("Ошибка синхронизации Supabase:", error);
+            notify("Не удалось синхронизировать данные: " + (error.message || "проверь подключение"));
+          });
+        return true;
       }
 
       function escapeText(text) {
@@ -1115,8 +1275,62 @@
         render();
       });
 
-      folders = load();
-      render();
+      $("loginForm").addEventListener("submit", async e => {
+        e.preventDefault();
+        $("loginError").textContent = "";
+        $("loginButton").disabled = true;
+        $("loginButton").textContent = "входим…";
+        const password = $("loginPassword").value;
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: LOGIN_EMAIL,
+          password
+        });
+        $("loginButton").disabled = false;
+        $("loginButton").textContent = "войти";
+        if (error) {
+          $("loginError").textContent = "Не удалось войти. Проверь пароль и настройки аккаунта Supabase.";
+          return;
+        }
+        currentUser = data.user;
+        await showApp();
+      });
+
+      async function showApp() {
+        $("authScreen").hidden = true;
+        $("appShell").hidden = false;
+        try {
+          await loadFromSupabase();
+        } catch (error) {
+          console.error(error);
+          notify("Не удалось загрузить данные из Supabase: " + (error.message || "ошибка"));
+        }
+      }
+
+      $("logoutButton").addEventListener("click", async () => {
+        await supabase.auth.signOut();
+        currentUser = null;
+        folders = [];
+        activeId = null;
+        $("appShell").hidden = true;
+        $("authScreen").hidden = false;
+        $("loginPassword").value = "";
+      });
+
+      supabase.auth.getSession().then(async ({ data, error }) => {
+        if (error) console.error(error);
+        if (data?.session?.user) {
+          currentUser = data.session.user;
+          await showApp();
+        }
+      });
+
+      supabase.auth.onAuthStateChange((_event, session) => {
+        if (!session) {
+          currentUser = null;
+          $("appShell").hidden = true;
+          $("authScreen").hidden = false;
+        }
+      });
     })();
   </script>
 </body>
